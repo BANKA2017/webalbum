@@ -26,12 +26,24 @@ export default createRouter({
             children: [{
                 path: 'index.html',
                 redirect: '/'
+            },{
+                path: '/game/:game_name',
+                component: Main,
+                name: 'game'
             }]
         },
         {
             path: '/photos/:tweet_id',
             component: Photos,
-            name: 'photos'
+            name: 'photos',
+            children: [{
+                path: '',
+                component: Main,
+            },{
+                path: ':photo_index',
+                component: Main,
+                name: 'photo-index'
+            }]
         },
         { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
         { path: '/:pathMatch(.*)', name: 'bad-not-found', component: NotFound },

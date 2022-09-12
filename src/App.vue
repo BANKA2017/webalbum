@@ -11,6 +11,9 @@
         </div>
       </div>
       <loading />
+      <div :class="{'fixed': true, 'right-5': true, 'bottom-20': true, 'px-3': true, 'py-2': true, 'cursor-pointer': true, 'border-2': true, 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps', 'transition-colors': true, 'duration-150': true, 'select-none': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'text-white': true}" style="z-index: 9999" @click="ScrollTo()">
+        Top
+      </div>
     </div>
   </div>
 </template>
@@ -24,9 +27,13 @@ import Loading from "@/components/Loading.vue";
 import {computed} from "vue";
 import {request} from "@/share/Fetch";
 import {ApiUserInfo} from "@/type/Api";
+import {ScrollTo} from "@/share/Tools"
+
 const route = useRoute()
 const store = useStore()
 const basePath = computed(() => store.state.basePath)
+const platform = computed(() => store.state.platform)
+
 if (localStorage.screen_name) {
   store.dispatch('setCoreValue', {key: 'screen_name', value: localStorage.screen_name})
 }

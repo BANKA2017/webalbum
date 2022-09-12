@@ -22,6 +22,8 @@ export interface State {
   status: 0 | 1 | 2
   loading: boolean
   tweets: Tweet[]
+  maxId: string,
+  hasmore: boolean
   basePath: string
   twemojiBasePath: string
   mediaPath: string

@@ -30,6 +30,8 @@ export const store = createStore<State>({
     status: 0,
     loading: true,
     tweets: [],
+    maxId: '0',
+    hasmore: false,
     basePath,
     twemojiBasePath,
     mediaPath
