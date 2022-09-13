@@ -15,7 +15,7 @@
           <div v-if="!state.editMode">
             <div class="flex justify-between items-center mb-2">
               <span v-if="screenName" :class="{'text-2xl': true, 'animate-pulse': !userInfo.display_name, 'bg-slate-300': !userInfo.display_name, 'h-8': !userInfo.screen_name, 'w-32': !userInfo.display_name,}">{{ userInfo.display_name ? userInfo.display_name : '' }}</span>
-              <span v-else class="text-2xl ">请填写推特用户名</span>
+              <span v-else class="text-2xl ">Twitter username</span>
               <span class="cursor-pointer hover:bg-slate-200 " @click="state.editMode = !state.editMode">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -90,20 +90,27 @@ const Platform = computed(() => store.state.platform)
 const setPlatform = (platform: 'ns' | 'ps') => {
   localStorage.platform = platform
   store.dispatch('setCoreValue', {key: 'platform', value: platform})
+  store.dispatch('setCoreValue', {key: 'tweets', value: []})
 }
 
-watch(screenName, () => {
-  if (screenName.value === '') {return}
+watch(() => state.editMode, () => {
+  if (screenName.value === '' || state.editMode) {return}
+  store.dispatch('setCoreValue', {key: 'userInfo', value: {
+      uid: 0,
+      screen_name: '',
+      display_name: '',
+      avatar: '',
+    }})
   request<ApiUserInfo>(basePath.value + "/api/v2/data/userinfo/?name=" + screenName.value).then(response => {
     if (response.code === 200) {
       store.dispatch('setCoreValue', {key: 'status', value: 2})
     }
     store.dispatch('setCoreValue', {key: 'userInfo', value: {
-        uid: response.data.uid,
-        screen_name: response.data.name,
-        display_name: response.data.display_name,
-        avatar: response.data.header,
-      }})
+      uid: response.data.uid,
+      screen_name: response.data.name,
+      display_name: response.data.display_name,
+      avatar: response.data.header,
+    }})
     store.dispatch('setCoreValue', {key: 'tweets', value: []} )
   }).catch(e => {
     console.error(e)

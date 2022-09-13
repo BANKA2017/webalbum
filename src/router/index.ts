@@ -26,11 +26,13 @@ export default createRouter({
             children: [{
                 path: 'index.html',
                 redirect: '/'
-            },{
-                path: '/game/:game_name',
-                component: Main,
-                name: 'game'
-            }]
+            },
+            //{
+            //    path: '/game/:game_name',
+            //    component: Main,
+            //    name: 'game'
+            //}
+            ]
         },
         {
             path: '/photos/:tweet_id',
@@ -39,6 +41,7 @@ export default createRouter({
             children: [{
                 path: '',
                 component: Main,
+                name: 'photos'
             },{
                 path: ':photo_index',
                 component: Main,

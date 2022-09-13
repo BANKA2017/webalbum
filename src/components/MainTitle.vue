@@ -11,7 +11,7 @@
           Settings
         </router-link>
         <router-link to="/settings" class="ml-2 bg-slate-200 rounded-full aspect-square w-[3em]" v-else>
-          <img class="rounded-full aspect-square w-[3em]" :src="mediaPath + userInfo.avatar" :alt="userInfo.display_name" />
+          <img :class="{'rounded-full': true, 'aspect-square w-[3em]': true, 'hover:border-2': true, 'transition-all': true, 'duration-150': true, 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps'}" :src="mediaPath + userInfo.avatar" :alt="userInfo.display_name" />
         </router-link>
       </div>
     </div>

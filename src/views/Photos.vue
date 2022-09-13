@@ -12,8 +12,22 @@
       </div>
       <div class="col-start-1 col-span-4 md:col-start-4 md:col-span-1">
         <ul class="mb-2">
-          <li v-for="(entity, order) in gameHash" :key="order"><router-link :to="'/game/' + entity.text" class="text-lg font-bold before:content-['#'] hover:underline hover:underline-offset-2" >{{entity.text}}</router-link></li>
+          <li v-for="(entity, order) in gameHash" :key="order"><span class="text-lg font-bold before:content-['#'] hover:underline hover:underline-offset-2" >{{entity.text}}</span></li>
         </ul>
+        <hr class="my-5" />
+        <p class="my-3">{{new Date(state.tweet[0].time * 1000).toLocaleString()}}</p>
+        <a :href="`https://twitter.com/i/status/${state.tweet[0].tweet_id_str}`" class="my-3 bg-[#1da1f2] hover:bg-[#2488bf] px-2 py-2 w-full block transition-colors duration-150" target="_blank">
+          <span class="after:content-['_↗'] text-white no-underline select-none font-bold">Twitter</span>
+        </a>
+        <hr class="my-3" />
+        <h3 class="text-xl font-bold my-2">Download</h3>
+        <a class="block px-3 py-2 border-2 border-sky-500 flex justify-between my-1 gap-1" :href="mediaPath + media.url + (media.origin_type === 'photo' ? ':orig' : '')" target="_blank" v-for="media in state.tweet[0].mediaObject" :key="media.filename">
+          <img class="inline-block w-16 h-auto object-scale-down" :src="mediaPath + media.cover + (media.origin_type === 'photo' ? ':tiny' : '')" alt="tweet media" />
+          <p >{{media.basename}}</p>
+        </a>
+        <!--<a :href="`https://twitter.com/i/status/${state.tweet[0].tweet_id_str}`" class="my-3 bg-[#1da1f2] hover:bg-[#2488bf] px-2 py-2 w-full block transition-colors duration-150">
+          <span class="after:content-['_↓'] text-white no-underline">Download</span>
+        </a>-->
         <!--<div class="border-2 p-5">
           <h4 class="text-xl font-bold">提示</h4>
           <p >右键下载图片</p>

@@ -51,7 +51,7 @@ export const store = createStore<State>({
       state.platform = payload.platform
     },
     updateTweets(state, payload: { tweets: Tweet[] }) {
-      state.tweets = [...state.tweets, ...payload.tweets]
+      state.tweets = [...new Set([...state.tweets, ...payload.tweets])]
     }
   },
   actions: {

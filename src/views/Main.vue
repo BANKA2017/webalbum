@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import {computed, onMounted, reactive, watch} from "vue";
-import {request} from "@/share/Fetch";
+import {controller, request} from "@/share/Fetch";
 import {ApiTweets} from "@/type/Api";
 import {Media, Tweet} from "@/type/Content";
 import {useHead} from "@vueuse/head";
@@ -60,25 +60,27 @@ const maxId = computed(() => store.state.maxId)
 const hasmore = computed(() => store.state.hasmore)
 
 const route = useRoute()
-
+const cancelToken = controller
 const load = (tweet_id: string | number | bigint = -1) => {
   state.loadmore = true
-  console.log(basePath.value + "/api/v2/data/search/?count=20&q=filter:twimg OR filter:consumer_video OR filter:pro_video source:" + platform.value + " from:" + screenName.value + ((route.name === 'game' && route.params.game_name) ? ' #' + route.params.game_name.toString() : '') + ((!BigInt(tweet_id) || BigInt(tweet_id) < BigInt(0)) ? '' : ' max_id:' + String(BigInt(tweet_id) - BigInt(1)) ))
+
   const queryArray = ['filter:twimg OR filter:consumer_video OR filter:pro_video', `source:${platform.value}`, `from:${screenName.value}`]
   //game name
   if (route.name === 'game' && route.params.game_name) {
     queryArray.push(`#${route.params.game_name.toString()}`)
   }
   //max id
+  let sinceTweetId = false
   if ((BigInt(tweet_id) && BigInt(tweet_id) > BigInt(0))) {
     queryArray.push('max_id:' + String(BigInt(tweet_id) - BigInt(1)))
+    sinceTweetId = true
   }
   request<ApiTweets>(basePath.value + "/api/v2/data/search/?" + new URLSearchParams({
     count: '20',
     q: queryArray.join(' '),
-  })).then(response => {
+  }), cancelToken).then(response => {
     if (response.code === 200) {
-      if (tweets.value.length) {
+      if (tweets.value.length && sinceTweetId) {
         store.dispatch('pushCoreValue', {key: 'tweets', value: response.data.tweets} )
       } else {
         store.dispatch('setCoreValue', {key: 'tweets', value: response.data.tweets} )
@@ -100,24 +102,24 @@ const load = (tweet_id: string | number | bigint = -1) => {
 onMounted(() => {
   //store.updateLoadingStatus(true)
   //TODO fix update
-  //if (!tweets.value.length) {
+  if (!tweets.value.length) {
     load()
-  //} else {
-  //  state.loading = false
-  //}
+  } else {
+    state.loading = false
+  }
 })
 
 watch(platform, () => {
   load()
 })
 
-onBeforeRouteUpdate((to, from, next) => {
-  //force update
-  //if ((to.name === 'main' && from.name === 'game') || (to.name === 'game' && from.name === 'main')) {
-    load()
-  //}
-  next()
-})
+//onBeforeRouteUpdate((to, from, next) => {
+//  //force update
+//  //if ((to.name === 'main' && from.name === 'game') || (to.name === 'game' && from.name === 'main')) {
+//    load()
+//  //}
+//  next()
+//})
 
 const realData = computed(() => {
   let tmpData: {[p: string]: Media[]} = {}
