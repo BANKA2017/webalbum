@@ -42,7 +42,7 @@ store.dispatch('updatePlatform', localStorage.platform === 'ps' ? 'ps' : 'ns')
 
 const screenName = computed(() => store.state.screen_name)
 if (screenName.value) {
-  request<ApiUserInfo>(basePath.value + "/api/v2/data/userinfo/?name=" + screenName.value).then(response => {
+  request<ApiUserInfo>(basePath.value + "/data/userinfo/?name=" + screenName.value).then(response => {
     if (response.code === 200) {
       store.dispatch('setCoreValue', {key: 'status', value: 2})
     }

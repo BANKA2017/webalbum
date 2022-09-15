@@ -101,7 +101,7 @@ watch(() => state.editMode, () => {
       display_name: '',
       avatar: '',
     }})
-  request<ApiUserInfo>(basePath.value + "/api/v2/data/userinfo/?name=" + screenName.value).then(response => {
+  request<ApiUserInfo>(basePath.value + "/data/userinfo/?name=" + screenName.value).then(response => {
     if (response.code === 200) {
       store.dispatch('setCoreValue', {key: 'status', value: 2})
     }

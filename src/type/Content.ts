@@ -32,40 +32,14 @@ export interface LegacyChart {
 }
 
 export interface Tweet {
-  tweet_id: number
-  tweet_id_str: string
-  conversation_id_str: string
-  uid: number
-  uid_str: string
+  tweet_id: string
+  uid: string
   name: string
   display_name: string
-  avatar?: string //online mode only
-  media: number
-  video: number
-  card: string
-  poll: number
-  quote_status: number
-  quote_status_str: string
   source: string
-  full_text: string
-  full_text_origin: string
-  retweet_from: string
-  retweet_from_name: string
-  dispute: number
   time: number
-  type: string
-  favorite_count?: number
-  retweet_count?: number
-  quote_count?: number
-  rtl?: boolean
-  display_text_range?: number[]
-  entities: Entity[]
-  pollObject: PollItem[]
-  cardObject?: Card
-  quoteObject?: Quote
-  mediaObject: Media[]
-  user_info?: UserInfo
-  retweet_user_info?: UserInfo
+  entities: string[]
+  media: Media[]
 }
 
 export interface Translate {
