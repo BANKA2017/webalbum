@@ -7,11 +7,13 @@
       </div>
 
       <div class="flex justify-end items-center">
+        {{screen_name}}
         <router-link to="/settings" class="border-2 border-cyan-500 hover:bg-slate-100 px-3 py-1" v-if="!screen_name">
           Settings
         </router-link>
         <router-link to="/settings" class="ml-2 bg-slate-200 rounded-full aspect-square w-[3em]" v-else>
-          <img :class="{'rounded-full': true, 'aspect-square w-[3em]': true, 'hover:border-2': true, 'transition-all': true, 'duration-150': true, 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps'}" :src="mediaPath + userInfo.avatar" :alt="userInfo.display_name" />
+          <div :class="{'rounded-full': true, 'aspect-square w-[3em]': true, 'hover:border-2': true, 'transition-all': true, 'duration-150': true, 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps'}" v-if="!userInfo.avatar" />
+          <img :class="{'rounded-full': true, 'aspect-square w-[3em]': true, 'hover:border-2': true, 'transition-all': true, 'duration-150': true, 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps'}" :src="mediaPath + userInfo.avatar" :alt="userInfo.display_name" v-else/>
         </router-link>
       </div>
     </div>

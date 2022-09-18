@@ -9,7 +9,8 @@
     <div class="md:col-start-2 md:col-span-2 w-full md:border-l-4 md:border-l-transparent px-0 md:px-10">
       <div class="grid grid-cols-10">
         <div class="col-start-1 col-span-4 px-0 sm:px-2 md:px-0 xl:px-5">
-          <img class="aspect-square w-full bg-slate-500" :src="mediaPath + userInfo.avatar" :alt="userInfo.display_name" />
+          <div v-if="!userInfo.avatar" class="aspect-square w-full bg-slate-300 animate-pulse"/>
+          <img v-else class="aspect-square w-full bg-slate-300" :src="mediaPath + userInfo.avatar" :alt="userInfo.display_name" />
         </div>
         <div class="col-start-5 col-span-7 p-5 divide-gray-900">
           <div v-if="!state.editMode">
