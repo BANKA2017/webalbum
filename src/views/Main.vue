@@ -7,6 +7,9 @@
       </div>
     </div>
     <template v-else>
+      <div>
+        <div v-for="game in tagList" :key="game.gameId" :class="{'inline-block': true, 'mr-2': true, 'mb-2': true, 'px-3': true, 'py-1': true, 'rounded-xl': true, 'border-2': true, 'text-sm': true, 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps'}" >{{game.mostTag}} <span class="ml-1 bg-gray-500 rounded-lg py-0.5 px-1 text-white text-sm font-mono">{{game.count}}</span></div>
+      </div>
       <div class="my-2" v-for="(photos, date) in realData" :key="date">
         <h3 class="text-4xl font-sans my-4 sticky top-0 bg-white py-2" style="z-index: 9990">{{ date }}</h3>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
@@ -125,6 +128,60 @@ watch(platform, () => {
 //  //}
 //  next()
 //})
+
+const tagList = computed(() => {
+  const tmpList = tweets.value.filter(tweet => tweet.entities.length).map(tweet => tweet.entities)
+  let list: {[p: string]: {count: number, gameId: number}} = {}
+  let gameCount: number[] = []
+  let gameId = 0
+  tmpList.forEach(tags => {
+    let updateGameId = false
+    //try to gei gameId
+    let tmpGameId = gameId
+    gameId += (tags.some(tag => {
+      if (list[tag]) {
+        tmpGameId = list[tag].gameId
+        return true
+      }
+      return false
+    }) ? 0 : 1 )
+    if (gameCount[tmpGameId]) {
+      gameCount[tmpGameId]++
+    } else {
+      gameCount[tmpGameId] = 1
+    }
+    tags.forEach(tag => {
+      if (list[tag]) {
+        list[tag].count++
+      } else {
+        updateGameId = true
+        list[tag] = {
+          count: 1,
+          gameId: tmpGameId
+        }
+      }
+    })
+  })
+  let list2: {gameId: number; tags: {[p: string]: number}; count: number; mostTag: string}[] = []
+  for (const gameName in list) {
+    if (!list2[list[gameName].gameId]) {
+      list2[list[gameName].gameId] = {
+        gameId: list[gameName].gameId,
+        tags: {[gameName]: list[gameName].count},
+        count: gameCount[list[gameName].gameId],
+        mostTag: ''
+      }
+    } else {
+      list2[list[gameName].gameId].tags[gameName] = list[gameName].count
+    }
+  }
+  list2.map(list => {
+    list.mostTag = Object.keys(list.tags).sort((a, b) => list.tags[b] - list.tags[a])[0]
+    return list
+  })
+
+  return list2.sort((a, b) => b.count - a.count)
+})
 
 const realData = computed(() => {
   let tmpData: {[p: string]: Media[]} = {}
