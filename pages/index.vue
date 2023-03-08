@@ -7,8 +7,8 @@
       </div>
     </div>
     <template v-else>
-      <div>
-        <div v-for="game in tagList" :key="game.gameId" :class="{'inline-block': true, 'mr-2': true, 'mb-2': true, 'px-3': true, 'py-1': true, 'rounded-xl': true, 'border-2': true, 'text-sm': true, 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps'}" >{{game.mostTag}} <span class="ml-1 bg-gray-500 rounded-lg py-0.5 px-1 text-white text-sm font-mono">{{game.count}}</span></div>
+      <div class="snap-x snap-mandatory flex flex-nowrap flex-row overflow-auto scroll-smooth">
+        <NuxtLink :to="{path: '/', query: {game: Object.keys(game.tags).includes(queryGame) ? undefined : game.mostTag}}" v-for="game in tagList" :key="game.gameId" :class="{'inline-block': true, 'mr-2': true, 'mb-2': true, 'px-3': true, 'py-1': true, 'rounded-xl': true, 'border-2': true, 'text-sm': true, 'bg-[#E60012]': platform === 'ns' && Object.keys(game.tags).includes(queryGame), 'bg-[#0070D1]': platform === 'ps' && Object.keys(game.tags).includes(queryGame), 'text-white': Object.keys(game.tags).includes(queryGame), 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps', 'snap-always': true, 'snap-center': true, 'flex-none': true, }" >{{game.mostTag}} <span class="ml-1 bg-gray-500 rounded-lg py-0.5 px-1 text-white text-sm font-mono">{{game.count}}</span></NuxtLink>
       </div>
       <div class="my-2" v-for="(photos, date) in realData" :key="date">
         <h3 class="text-4xl font-sans my-4 sticky top-0 bg-white py-2" style="z-index: 9990">{{ date }}</h3>
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="my-2 flex justify-center">
-        <div v-if="hasmore" class="border-cyan-600 hover:bg-slate-100 cursor-pointer border-2 rounded-full px-5 py-1 font-bold text-lg select-none" @click="load(maxId)">
+        <div v-if="hasmore" class="border-cyan-600 hover:bg-slate-100 cursor-pointer border-2 rounded-full px-5 py-1 font-bold text-lg select-none" @click="load(maxId, queryGame)">
           <svg v-if="state.loadmore" :class="{'animate-spin': true, '-ml-1': true, 'mr-1': true, 'h-5': true, 'w-5': true, 'inline-block': true, 'text-[#E60012]': platform === 'ns', 'text-[#0070D1]': platform === 'ps'}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -41,13 +41,12 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, reactive, watch} from "vue";
-import {controller, request} from "@/share/Fetch";
-import {ApiTweets} from "@/type/Api";
-import {Media, Tweet} from "@/type/Content";
-import {useHead} from "@vueuse/head";
-import {useStore} from "@/store";
-import {onBeforeRouteUpdate, useRoute} from "vue-router";
+
+import {useMainStore} from "~/stores/main";
+import {Media} from "~/type/Content";
+import {controller, request} from "~/share/Fetch";
+import {ApiTweets} from "~/type/Api";
+
 useHead({title: "Album"})
 
 const state = reactive<{
@@ -58,18 +57,19 @@ const state = reactive<{
   loadmore: false
 })
 
-const store = useStore()
-const screenName = computed(() => store.state.screen_name)
-const platform = computed(() => store.state.platform) //'nintendo_switch_share'//'PlayStation®Network'
-const tweets = computed(() => store.state.tweets)
-const basePath = computed(() => store.state.basePath)
-const mediaPath = computed(() => store.state.mediaPath)
-const maxId = computed(() => store.state.maxId)
-const hasmore = computed(() => store.state.hasmore)
+const config = useRuntimeConfig()
+const store = useMainStore()
+const screenName = computed(() => store.screen_name)
+const platform = computed(() => store.platform) //'nintendo_switch_share'//'PlayStation®Network'
+const tweets = computed(() => store.tweets)
+const basePath = config.public.NUXT_BASE_PATH
+const mediaPath = config.public.NUXT_MEDIA_PATH
+const maxId = computed(() => store.maxId)
+const hasmore = computed(() => store.hasmore)
 
 const route = useRoute()
 const cancelToken = controller
-const load = (tweet_id: string | number | bigint = -1) => {
+const load = (tweet_id: string | number | bigint = -1, game: string = '') => {
   state.loadmore = true
 
   let queryObject: {[p: string]: string} = {
@@ -77,8 +77,8 @@ const load = (tweet_id: string | number | bigint = -1) => {
     platform: platform.value
   }
   //game name
-  if (route.name === 'game' && route.params.game_name) {
-    queryObject.game = route.params.game_name.toString()
+  if (game) {
+    queryObject.game = game
   }
   //max id
   let sinceTweetId = false
@@ -86,15 +86,15 @@ const load = (tweet_id: string | number | bigint = -1) => {
     queryObject.tweet_id = String(BigInt(tweet_id) - BigInt(1))
     sinceTweetId = true
   }
-  request<ApiTweets>(basePath.value + "/data/list/?" + new URLSearchParams(queryObject), cancelToken).then(response => {
+  request<ApiTweets>(basePath + "/data/list/?" + new URLSearchParams(queryObject), cancelToken).then(response => {
     if (response.code === 200) {
       if (tweets.value.length && sinceTweetId) {
-        store.dispatch('pushCoreValue', {key: 'tweets', value: response.data.tweets} )
+        store.updateCoreValue('tweets', tweets.value.concat(response.data.tweets))
       } else {
-        store.dispatch('setCoreValue', {key: 'tweets', value: response.data.tweets} )
+        store.updateCoreValue('tweets', response.data.tweets)
       }
-      store.dispatch('setCoreValue', {key: 'maxId', value: response.data?.bottom_tweet_id || '0'} )
-      store.dispatch('setCoreValue', {key: 'hasmore', value: response.data?.hasmore || false} )
+      store.updateCoreValue('maxId', response.data?.bottom_tweet_id || '0')
+      store.updateCoreValue('hasmore', response.data?.hasmore || false)
     }
 
     state.loading = false
@@ -111,24 +111,26 @@ onMounted(() => {
   //store.updateLoadingStatus(true)
   //TODO fix update
   if (!tweets.value.length) {
-    load()
+    load(-1, queryGame.value)
   } else {
+    if (queryGame.value) {
+      store.updateCoreValue('tweets', tweets.value.filter(x => x.entities.includes(queryGame.value)))
+    }
     state.loading = false
   }
 })
 
 watch(platform, () => {
-  load()
+  load(-1, queryGame.value)
 })
 
-//onBeforeRouteUpdate((to, from, next) => {
-//  //force update
-//  //if ((to.name === 'main' && from.name === 'game') || (to.name === 'game' && from.name === 'main')) {
-//    load()
-//  //}
-//  next()
-//})
+onBeforeRouteUpdate((to, from) => {
+  if (to.query.game !== from.query.game) {
+    load(-1, (to.query?.game || '').toString())
+  }
+})
 
+const queryGame = computed(() => (route.query?.game || '').toString())
 const tagList = computed(() => {
   const tmpList = tweets.value.filter(tweet => tweet.entities.length).map(tweet => tweet.entities)
   let list: {[p: string]: {count: number, gameId: number}} = {}
@@ -198,19 +200,24 @@ const realData = computed(() => {
   return tmpData
 })
 
+
+definePageMeta({
+  layout: "web-album",
+})
+
 </script>
 
 <style scoped lang="scss">
-  .cover-item {
-    transition: all;
-    transition-delay: 150ms;
+.cover-item {
+  transition: all;
+  transition-delay: 150ms;
+  .dl {
+    opacity: 0;
+  }
+  &:hover {
     .dl {
-      display: none;
-    }
-    &:hover {
-      .dl {
-        display: block;
-      }
+      opacity: 100%;
     }
   }
+}
 </style>

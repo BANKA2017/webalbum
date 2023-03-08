@@ -10,14 +10,14 @@
 <script setup lang="ts">
 import {onMounted} from "vue"
 import {onBeforeRouteLeave} from "vue-router"
-import {useStore} from "@/store";
 import {computed} from "vue";
+import {useMainStore} from "~/stores/main";
 
-const store = useStore()
-const loading = computed(() => store.state.loading)
+const store = useMainStore()
+const loading = computed(() => store.loading)
 
-onMounted(() => {store.dispatch('setCoreValue', {key: 'loading', value: false})})
-onBeforeRouteLeave(() => {store.dispatch('setCoreValue', {key: 'loading', value: true})})
+onMounted(() => {store.updateCoreValue('loading', false)})
+onBeforeRouteLeave(() => {store.updateCoreValue('loading', true)})
 
 </script>
 

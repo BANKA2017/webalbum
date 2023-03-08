@@ -11,7 +11,7 @@
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
           </div>
-          <div v-if="media[state.activeIndex].origin_type === 'photo'" class="bg-white opacity-50 block lg:hidden absolute bottom-4 right-0 blur-md z-10 w-[7rem] h-[3rem]" ></div>
+          <div v-if="media[state.activeIndex].origin_type === 'photo'" class="bg-white opacity-100 block lg:hidden absolute bottom-4 right-0 blur-md z-10 w-[7rem] h-[3rem]" ></div>
           <div v-if="media[state.activeIndex].origin_type === 'photo'" class="font-sans text-black text-3xl block bg-transparent lg:hidden absolute bottom-5 right-5 select-none" style="z-index: 9999">
             <p>{{(state.activeIndex + 1) + ' / ' + media.length}}</p>
           </div>
@@ -39,7 +39,6 @@
 
 import {computed, PropType, reactive, watch} from "vue";
 import {Media} from "@/type/Content";
-import {useStore} from "@/store";
 import {useRoute, useRouter} from "vue-router";
 
 const props = defineProps({
@@ -70,8 +69,8 @@ watch(props.media, () => {
 })
 
 const route = useRoute()
-if (route.name === 'photo-index') {
-  const tmpIndex = Number(route.params.photo_index)
+if (route.params.slug.length > 1) {
+  const tmpIndex = Number(route.params.slug[1])
   if ([1,2,3,4].includes(tmpIndex)) {
     state.activeIndex = tmpIndex - 1
   }
@@ -81,8 +80,8 @@ watch(() => state.activeIndex, () => {
   state.loadingImage = true
 })
 
-const store = useStore()
-const mediaPath = computed(() => store.state.mediaPath)
+const config = useRuntimeConfig()
+const mediaPath = config.public.NUXT_MEDIA_PATH
 const router = useRouter()
 
 const updateIndex = (index: number = 0) => {

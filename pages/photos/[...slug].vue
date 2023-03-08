@@ -12,7 +12,7 @@
       </div>
       <div class="col-start-1 col-span-4 md:col-start-4 md:col-span-1">
         <ul class="mb-2" v-if="gameHash.length > 0">
-          <li v-for="(entity, order) in gameHash" :key="order"><span class="text-lg font-bold before:content-['#'] hover:underline hover:underline-offset-2" >{{ entity }}</span></li>
+          <li v-for="(entity, order) in gameHash" :key="order"><NuxtLink :to="{path: '/', query: {game: entity}}" class="text-lg font-bold before:content-['#'] hover:underline hover:underline-offset-2" >{{ entity }}</NuxtLink></li>
         </ul>
         <hr class="my-5" v-if="gameHash.length > 0"/>
         <h3 class="text-xl font-bold mb-2">Download</h3>
@@ -62,13 +62,13 @@
 </template>
 
 <script setup lang="ts">
-import {computed, reactive, Ref, ref} from "vue"
-import {onBeforeRouteLeave, useRoute, useRouter} from "vue-router"
-import {useStore} from "@/store";
-import ImageList from "@/components/ImageList.vue";
-import {request} from "@/share/Fetch";
-import {ApiTweets} from "@/type/Api";
-import {Tweet} from "@/type/Content";
+
+import {useMainStore} from "~/stores/main";
+import {Tweet} from "~/type/Content";
+import {ApiTweets} from "~/type/Api";
+import {request} from "~/share/Fetch";
+
+useHead({title: 'Web Album'})
 
 const state = reactive<{
   tweet: Tweet[]
@@ -77,12 +77,13 @@ const state = reactive<{
 })
 
 const route = useRoute()
-const store = useStore()
-const basePath = computed(() => store.state.basePath)
-const mediaPath = computed(() => store.state.mediaPath)
-const storeTweets = computed(() => store.state.tweets)
-const platform = computed(() => store.state.platform)
-const tweets = computed(() => storeTweets.value.filter(x => x.tweet_id === route.params.tweet_id.toString()))
+const config = useRuntimeConfig()
+const store = useMainStore()
+const basePath = config.public.NUXT_BASE_PATH
+const mediaPath = config.public.NUXT_MEDIA_PATH
+const storeTweets = computed(() => store.tweets)
+const platform = computed(() => store.platform)
+const tweets = computed(() => storeTweets.value.filter(x => x.tweet_id === route.params.slug[0].toString()))
 state.tweet = tweets.value
 const gameHash = computed(() => {
   if (!state.tweet[0]) {
@@ -94,7 +95,7 @@ const gameHash = computed(() => {
 
 if (state.tweet.length === 0) {
   //get tweet online
-  request<ApiTweets>(basePath.value + "/data/list/?photos=1&tweet_id=" + route.params.tweet_id.toString()).then(response => {
+  request<ApiTweets>(basePath + "/data/list/?photos=1&tweet_id=" + route.params.slug[0].toString()).then(response => {
     state.tweet = response.data.tweets//store.dispatch('setCoreValue', {key: 'tweets', value: response.data.tweets} )
     //store.updateLoadingStatus(false)
   }).catch(e => {
@@ -103,6 +104,9 @@ if (state.tweet.length === 0) {
   })
 }
 
+definePageMeta({
+  layout: "web-album",
+})
 
 </script>
 

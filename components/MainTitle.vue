@@ -20,13 +20,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import {useStore} from "@/store";
 import {computed} from "vue";
+import {useMainStore} from "../stores/main";
+import {useRuntimeConfig} from "nuxt/app";
 
-const store = useStore()
-const userInfo = computed(() => store.state.userInfo)
-const mediaPath = computed(() => store.state.mediaPath)
-const platform = computed(() => store.state.platform)
-const screen_name = computed(() => store.state.screen_name)
+const config = useRuntimeConfig()
+const store = useMainStore()
+const userInfo = computed(() => store.userInfo)
+const mediaPath = config.public.NUXT_MEDIA_PATH
+const platform = computed(() => store.platform)
+const screen_name = computed(() => store.screen_name)
 
 </script>

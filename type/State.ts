@@ -9,7 +9,6 @@ export interface userListInterface {name: string; display_name: string; project:
 export interface State {
   now: Date
   userTimeZone: string
-  devmode: boolean
 
   screen_name: string
   userInfo: {
@@ -24,7 +23,4 @@ export interface State {
   tweets: Tweet[]
   maxId: string,
   hasmore: boolean
-  basePath: string
-  twemojiBasePath: string
-  mediaPath: string
 }

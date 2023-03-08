@@ -5,7 +5,7 @@ export interface AccountList {
 }
 
 export interface UserInfo {
-  uid: number
+  uid: string
   uid_str: string
   name: string
   display_name: string

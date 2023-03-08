@@ -50,14 +50,12 @@
 </template>
 
 <script setup lang="ts">
+import {useMainStore} from "~/stores/main";
+import {ApiUserInfo} from "~/type/Api";
 
-import {reactive, Ref, watch} from "vue"
-import {useHead} from "@vueuse/head"
-import {useStore} from "@/store";
-import {computed, ref} from "vue";
-import {request} from "@/share/Fetch";
-import {ApiUserInfo} from "@/type/Api";
-//useHead(headData('归档 - ' + metaData.name, "查看摸鱼记录"))
+useHead({
+  title: '设定'
+})
 
 const SettingsList = {
   user: '用户',
@@ -66,56 +64,68 @@ const SettingsList = {
 }
 
 const state = reactive<{
-  page: Ref<string>
-  editMode: Ref<boolean>
+  page: string
+  editMode: boolean
 }>({
-  page: ref('user'),
-  editMode: ref(false)
+  page: 'user',
+  editMode: false
 })
-const store = useStore()
-const userInfo = computed(() => store.state.userInfo)
-const basePath = computed(() => store.state.basePath)
-const mediaPath = computed(() => store.state.mediaPath)
+
+const config = useRuntimeConfig()
+const store = useMainStore()
+const userInfo = computed(() => store.userInfo)
+const basePath = config.public.NUXT_BASE_PATH
+const mediaPath = config.public.NUXT_MEDIA_PATH
 
 const screenName = computed({
-  get () {return store.state.screen_name},
+  get () {return store.screen_name},
   set (value: string) {
-    store.dispatch('setCoreValue', {key: 'screen_name', value})
+    store.updateCoreValue('screen_name', value)
     localStorage.screen_name = value
-    store.dispatch('setCoreValue', {key: 'tweets', value: []})
+    store.updateCoreValue('tweets', [])
   }
 })
 
-const Platform = computed(() => store.state.platform)
+const Platform = computed(() => store.platform)
 
 const setPlatform = (platform: 'ns' | 'ps') => {
   localStorage.platform = platform
-  store.dispatch('setCoreValue', {key: 'platform', value: platform})
-  store.dispatch('setCoreValue', {key: 'tweets', value: []})
+  store.updateCoreValue('platform', platform)
+  store.updateCoreValue('tweets', [])
 }
 
 watch(() => state.editMode, () => {
   if (screenName.value === '' || state.editMode) {return}
-  store.dispatch('setCoreValue', {key: 'userInfo', value: {
-      uid: 0,
-      screen_name: '',
-      display_name: '',
-      avatar: '',
-    }})
-  request<ApiUserInfo>(basePath.value + "/data/userinfo/?name=" + screenName.value).then(response => {
-    if (response.code === 200) {
-      store.dispatch('setCoreValue', {key: 'status', value: 2})
+  store.updateCoreValue('userInfo', {
+    uid: '0',
+    screen_name: '',
+    display_name: '',
+    avatar: '',
+  })
+
+  useFetch<ApiUserInfo>("/data/userinfo/?name=" + screenName.value, {baseURL: basePath}).then(response => {
+    if (response.data.value !== null) {
+      if (response.data.value.code === 200) {
+        store.updateCoreValue('status', 2)
+      }
+      store.updateCoreValue('userInfo', {
+        uid: response.data.value.data.uid,
+        screen_name: response.data.value.data.name,
+        display_name: response.data.value.data.display_name,
+        avatar: response.data.value.data.header,
+      })
+      store.updateCoreValue('tweets', [])
     }
-    store.dispatch('setCoreValue', {key: 'userInfo', value: {
-      uid: response.data.uid,
-      screen_name: response.data.name,
-      display_name: response.data.display_name,
-      avatar: response.data.header,
-    }})
-    store.dispatch('setCoreValue', {key: 'tweets', value: []} )
   }).catch(e => {
     console.error(e)
   })
 })
 
+definePageMeta({
+  layout: "web-album",
+})
 </script>
+
+<style scoped>
+
+</style>
