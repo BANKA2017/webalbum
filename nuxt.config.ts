@@ -2,6 +2,7 @@
 import NodeGlobalsPolyfillPlugin from "@esbuild-plugins/node-globals-polyfill";
 
 export default defineNuxtConfig({
+  ssr: false,
   runtimeConfig: {
     NUXT_GA_ID: process.env.NUXT_GA_ID,
     public: {
