@@ -4,7 +4,6 @@ import NodeGlobalsPolyfillPlugin from "@esbuild-plugins/node-globals-polyfill";
 export default defineNuxtConfig({
   ssr: false,
   runtimeConfig: {
-    NUXT_GA_ID: process.env.NUXT_GA_ID,
     public: {
       NUXT_BASE_PATH: process.env.NUXT_BASE_PATH,
       NUXT_MEDIA_PATH: process.env.NUXT_MEDIA_PATH,

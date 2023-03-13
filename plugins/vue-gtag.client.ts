@@ -1,11 +1,11 @@
 import VueGtag from 'vue-gtag-next'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const config = useRuntimeConfig()
+  const NUXT_GA_ID = process.env.NUXT_GA_ID || ''
   if (process.env.NODE_ENV !== 'development') {
     nuxtApp.vueApp.use(VueGtag, {
       property: {
-        id: config.NUXT_GA_ID
+        id: NUXT_GA_ID
       }
     })
   }
