@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     public: {
       NUXT_BASE_PATH: process.env.NUXT_BASE_PATH,
       NUXT_MEDIA_PATH: process.env.NUXT_MEDIA_PATH,
+      NUXT_GA_ID: process.env.NUXT_GA_ID,
     }
   },
   modules: [
