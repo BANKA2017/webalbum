@@ -11,23 +11,19 @@
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
           </div>
-          <div v-if="media[state.activeIndex].origin_type === 'photo'" class="bg-white opacity-100 block lg:hidden absolute bottom-4 right-0 blur-md z-10 w-[7rem] h-[3rem]" ></div>
-          <div v-if="media[state.activeIndex].origin_type === 'photo'" class="font-sans text-black text-3xl block bg-transparent lg:hidden absolute bottom-5 right-5 select-none" style="z-index: 9999">
-            <p>{{(state.activeIndex + 1) + ' / ' + media.length}}</p>
-          </div>
-          <img v-if="media[state.activeIndex].origin_type === 'photo'" class="aspect-video w-full bg-slate-300 object-scale-down" :src="mediaPath + media[state.activeIndex].cover + ':orig'" loading="lazy" :alt="media[state.activeIndex].filename" @load="state.loadingImage = false">
-          <video v-else controls :poster="mediaPath + media[state.activeIndex].cover" :src="mediaPath + media[state.activeIndex].url" class="aspect-video w-full bg-slate-300 object-scale-down" @loadedmetadata="state.loadingImage = false" />
+          <img v-if="media[state.activeIndex].origin_type === 'photo'" class="aspect-video w-full bg-slate-300 dark:bg-slate-700 object-scale-down" :src="mediaPath + media[state.activeIndex].cover + ':orig'" loading="lazy" :alt="media[state.activeIndex].filename" @load="state.loadingImage = false">
+          <video v-else controls :poster="mediaPath + media[state.activeIndex].cover" :src="mediaPath + media[state.activeIndex].url" class="aspect-video w-full bg-slate-300 dark:bg-slate-700 object-scale-down" @loadedmetadata="state.loadingImage = false" />
         </div>
       </div>
       <!--小图预览-->
       <div class="flex justify-between">
         <div >
-          <div @click="updateIndex(index)" :class="{'bg-slate-300': true, 'cursor-pointer': true, 'inline-block': true, 'mr-5': true, 'aspect-square': true, 'h-24': true, 'border-4': true, 'border-transparent': state.activeIndex !== index, 'border-cyan-500': state.activeIndex === index, 'hover:border-cyan-500': true}" v-for="(mediaItem, index) in media" :key="mediaItem.filename">
+          <div @click="updateIndex(index)" :class="{'bg-slate-300': true, 'dark:bg-slate-700': true, 'cursor-pointer': true, 'inline-block': true, 'mr-5': true, 'aspect-square': true, 'h-24': true, 'border-4': true, 'border-transparent': state.activeIndex !== index, 'border-cyan-500': state.activeIndex === index, 'hover:border-cyan-500': true}" v-for="(mediaItem, index) in media" :key="mediaItem.filename">
             <img class="" :src="mediaPath + mediaItem.cover + ':thumb'" loading="lazy" :alt="mediaItem.filename">
           </div>
         </div>
 
-        <div class="font-sans md:text-3xl lg:text-[4rem] mt-5 hidden lg:block">
+        <div class="font-sans md:text-3xl lg:text-[4rem] mt-5 hidden lg:block dark:text-gray-200">
           <p>{{(state.activeIndex + 1) + ' / ' + media.length}}</p>
         </div>
       </div>

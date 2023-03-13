@@ -1,4 +1,5 @@
 import {Tweet} from "@/type/Content";
+import {darkModeType} from "~/share/DarkMode";
 
 //TODO fix type
 export type TweetMode = string//'timeline' | 'tag' | 'search' | 'status'
@@ -9,8 +10,11 @@ export interface userListInterface {name: string; display_name: string; project:
 export interface State {
   now: Date
   userTimeZone: string
+  dark: darkModeType
 
   screen_name: string
+  hashtags_count: number
+
   userInfo: {
     uid: string
     screen_name: string
