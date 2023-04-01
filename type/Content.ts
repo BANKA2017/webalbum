@@ -70,6 +70,7 @@ export interface Media {
   title?: string | null
   description?: string | null
   blurhash: string | null
+  index?: number
 }
 
 export interface OnlineMedia {

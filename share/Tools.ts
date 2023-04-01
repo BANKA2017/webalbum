@@ -37,4 +37,4 @@ const Download = (url: string, fileName: string) => {
   document.body.removeChild(element);
 }
 
-export {ScrollTo, createRealMediaPath, NullSafeParams, Equal}
+export {ScrollTo, createRealMediaPath, NullSafeParams, Equal, Download}

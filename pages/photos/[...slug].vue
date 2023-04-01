@@ -26,6 +26,9 @@
         </div>
         <hr class="my-3" />
         <p class="my-3">{{new Date(state.tweet[0].time * 1000).toLocaleString()}}</p>
+        <a :href="`https://twitter.com/${state.tweet[0].name}`" class="my-3 border-2 border-[#1da1f2] hover:bg-[#1da1f2] hover:text-white px-2 py-2 w-full block transition-colors duration-150" target="_blank">
+            <span class="after:content-['_↗'] no-underline select-none">@{{ state.tweet[0].name }}</span>
+        </a>
         <a :href="`https://twitter.com/i/status/${state.tweet[0].tweet_id}`" class="my-3 bg-[#1da1f2] hover:bg-[#2488bf] px-2 py-2 w-full block transition-colors duration-150" target="_blank">
           <span class="after:content-['_↗'] text-white no-underline select-none">Twitter</span>
         </a>
