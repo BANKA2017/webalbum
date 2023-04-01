@@ -14,7 +14,7 @@
         <div class="justify-between flex sticky py-2 top-0 bg-white group/date cursor-pointer" style="z-index: 9990" @click="(e) => {selectEvent(e, photos, false, !checkExist(photos))}">
             <h3 class="text-4xl font-sans bg-white inline-block" style="z-index: 9990">{{ date }}</h3>
             <div :class="{'inline-block':true, }" >
-                <div :class="{'w-5': true, 'rounded-full': true, 'bg-gray-700': !checkExist(photos), 'bg-[#E60012]': checkExist(photos) && platform === 'ns', 'bg-[#0070D1]': checkExist(photos) && platform === 'ps', 'text-white': true, 'my-2': true, 'group-hover/date:block': true, 'hidden': !selectedMode }">
+                <div :class="{'w-5': true, 'rounded-full': true, 'bg-gray-700': !checkExist(photos), 'bg-[#E60012]': checkExist(photos) && platform === 'ns', 'bg-[#0070D1]': checkExist(photos) && platform === 'ps', 'text-white': true, 'my-2': true, 'group-hover/date:opacity-100': true, 'opacity-0': !selectedMode , 'transition': true}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                         <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
@@ -25,14 +25,16 @@
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           <router-link :class="{'cursor-pointer': true, 'bg-slate-300': true, 'aspect-video': true, 'border-2': true, 'border-white': !state.selectedList.has(meta), 'border-sky-700': selectedMode && state.selectedList.has(meta), 'hover:border-sky-700': true, 'select-none': true, }" v-for="(meta, order) in photos" :key="order" :to="`/photos/${meta.tweet_id}/${meta.index}`">
             <div class="relative w-full aspect-video cover-item group/cover" @click="(e) => {selectEvent(e, [meta], false)}" >
-              <div :class="{absolute: true, 'm-2': true, 'w-5': true, 'rounded-full': true, 'text-sm': true, 'text-white': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'group-hover/cover:block': true, hidden: !selectedMode}" @click="(e) => {selectEvent(e, [meta], true)}">
-                  <svg v-if="state.selectedList.has(meta)" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
-                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                      <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-                  </svg>
-                  <svg v-else xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                  </svg>
+              <div :class="{absolute: true, 'p-2': true, 'rounded-full': true, 'text-sm': true, 'text-white': true, 'group-hover/cover:block': true, hidden: !selectedMode}" @click="(e) => {selectEvent(e, [meta], true)}">
+                  <div :class="{'w-5': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'rounded-full': true, }">
+                      <svg v-if="state.selectedList.has(meta)" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                          <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                      </svg>
+                      <svg v-else xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                      </svg>
+                  </div>
               </div>
               <div :class="{absolute: true, 'top-2': true, 'right-2': true, 'px-1': true, 'text-sm': true, 'text-white': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps'}" v-if="meta.origin_type !== 'photo'">VIDEO</div>
               <a :href="mediaPath + meta.url + (meta.origin_type === 'photo' ? ':orig' : '')" :class="{absolute: true, 'bottom-2': true, 'right-2': true, 'px-1': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'text-sm': true, 'text-white': true, 'w-8': true, 'h-8': true, 'transition-all': true, 'duration-150': true, 'dl': true}" target="_blank" @click="e => {e.stopPropagation()}" v-if="!selectedMode">
@@ -56,19 +58,19 @@
         </div>
       </div>
     </template>
-    <div :class="{'fixed': true, 'right-5': true, 'bottom-32': true, 'cursor-pointer': true, 'border-2': true, 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps', 'transition-colors': true, 'duration-150': true, 'select-none': true, }" style="z-index: 9999" @click="downloadAll()" v-if="selectedMode">
+    <div :class="{'fixed': true, 'right-5': true, 'bottom-32': true, 'cursor-pointer': true, 'border-2': true, 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps', 'transition-colors': true, 'duration-150': true, 'select-none': true, }" style="z-index: 9999" v-if="selectedMode">
         <div class="px-2 py-1 text-center relative overflow-hidden bg-white">
-            {{ state.selectedList.size }}
+            <span >{{ state.selectedList.size }}</span>
+            <div :class="{'px-2':true, 'py-1':true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'text-white': true, 'absolute':true, 'top-0':true, 'left-0':true, 'opacity-0':true, 'hover:opacity-100':true,}" @click="(e) => {downloadControllerList[downloadControllerList.length - 1].abort();selectEvent(e, [...state.selectedList], true);}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+            </div>
         </div>
         <div v-if="state.downloadCount" :class="{'px-2':true, 'py-1':true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'text-white': true, 'text-center': true, 'w-[2.5em]': true, }">
             <span >{{ state.downloadCount }}</span>
-            <!--<div class="absolute right-0 bottom-0">
-                <svg xmlns="http://www.w3.org/2000/svg" width="0.75em" height="0.75em" fill="currentColor" class="bi bi-file-arrow-down-fill" viewBox="0 0 16 16">
-                    <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8 5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5A.5.5 0 0 1 8 5z"/>
-                </svg>
-            </div>-->
         </div>
-        <div v-else :class="{'px-2':true, 'py-1':true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'text-white': true}">
+        <div v-else :class="{'px-2':true, 'py-1':true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'text-white': true}" @click="downloadAll()">
             <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
                 <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
                 <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
@@ -82,7 +84,7 @@
 
 import {useMainStore} from "~/stores/main";
 import {Media} from "~/type/Content";
-import {controller, request} from "~/share/Fetch";
+import {Controller, controller, request} from "~/share/Fetch";
 import {ApiTweets} from "~/type/Api";
 import {Download} from "~/share/Tools"
 
@@ -91,15 +93,15 @@ useHead({title: "Album"})
 const state = reactive<{
   loading: boolean
   loadmore: boolean
-  selectedList: Set<Media>
   downloadCount: number
   touchTimestamp: number
+  selectedList: Set<Media>
 }>({
   loading: true,
   loadmore: false,
-  selectedList: new Set(),
   downloadCount: 0,
-  touchTimestamp: 0
+  touchTimestamp: 0,
+  selectedList: new Set(),
 })
 const config = useRuntimeConfig()
 const store = useMainStore()
@@ -268,16 +270,25 @@ const checkExist = (mediaList: Media[]) => {
   return !mediaList.some(media => !state.selectedList.has(media))
 }
 
+const downloadControllerList: AbortController[] = [new AbortController()]
 const downloadAll = async () => {
+  downloadControllerList[downloadControllerList.length - 1].abort()
   const blobList: {blob: string, filename: string}[] = []
+  downloadControllerList.push(new Controller())
+  let nowSignal = downloadControllerList[downloadControllerList.length - 1].signal
   for (const metaItem of [...state.selectedList]) {
+    if (nowSignal.aborted) {
+      break
+    }
     try {
-      const response = await fetch(mediaPath + metaItem.url + (metaItem.url.endsWith('mp4') ? '' : ':orig')).then(response => response.blob())
+      const response = await fetch(mediaPath + metaItem.url + (metaItem.url.endsWith('mp4') ? '' : ':orig'), {
+        signal: nowSignal
+      }).then(response => response.blob())
       blobList.push({blob: URL.createObjectURL(response), filename: `${metaItem.uid}_${metaItem.tweet_id}_${metaItem.index}_${metaItem.filename}.${metaItem.extension}`})
     } catch (e) {
       console.log(e, metaItem)
     }
-    console.log(metaItem.url)
+    state.downloadCount++
   }
   setTimeout(() => {
     state.downloadCount = 0

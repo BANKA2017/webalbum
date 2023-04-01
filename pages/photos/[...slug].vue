@@ -71,7 +71,7 @@ import {Tweet} from "~/type/Content";
 import {ApiTweets} from "~/type/Api";
 import {request} from "~/share/Fetch";
 
-useHead({title: 'Web Album'})
+useHead({title: 'Photos'})
 
 const state = reactive<{
   tweet: Tweet[]

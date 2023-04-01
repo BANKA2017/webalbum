@@ -54,7 +54,7 @@ import {useMainStore} from "~/stores/main";
 import {ApiUserInfo} from "~/type/Api";
 
 useHead({
-  title: '设定'
+  title: 'Settings'
 })
 
 const SettingsList = {

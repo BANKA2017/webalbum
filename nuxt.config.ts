@@ -3,6 +3,9 @@ import NodeGlobalsPolyfillPlugin from "@esbuild-plugins/node-globals-polyfill";
 
 export default defineNuxtConfig({
   ssr: false,
+  devServer: {
+    host: '0.0.0.0'
+  },
   runtimeConfig: {
     public: {
       NUXT_BASE_PATH: process.env.NUXT_BASE_PATH,
