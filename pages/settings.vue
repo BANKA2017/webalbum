@@ -40,8 +40,9 @@
           <hr class="my-5">
           <label class="font-bold mb-3">Platform</label>
           <div class="grid grid-cols-2 gap-2">
-            <div @click="setPlatform('ns')" :class="{'col-span-2': true, 'lg:col-span-1': true, 'cursor-pointer': true, 'w-full': true, 'py-2': true, 'px-5': true, 'bg-[#E60012]': Platform === 'ns', 'text-white': Platform === 'ns', 'border-2': true, 'border-[#E60012]': Platform === 'ps',}">Nintendo Switch</div>
-            <div @click="setPlatform('ps')" :class="{'col-span-2': true, 'lg:col-span-1': true, 'cursor-pointer': true, 'w-full': true, 'py-2': true, 'px-5': true, 'bg-[#0070D1]': Platform === 'ps', 'text-white': Platform === 'ps', 'border-2': true, 'border-[#0070D1]': Platform === 'ns',}">PlayStation</div>
+            <div @click="setPlatform('ns')" :class="{'col-span-2': true, 'lg:col-span-1': true, 'cursor-pointer': true, 'w-full': true, 'py-2': true, 'px-5': true, 'bg-[#E60012]': Platform === 'ns', 'text-white': Platform === 'ns', 'border-2': true, 'border-[#E60012]': Platform !== 'ns',}">Nintendo Switch</div>
+            <div @click="setPlatform('ps')" :class="{'col-span-2': true, 'lg:col-span-1': true, 'cursor-pointer': true, 'w-full': true, 'py-2': true, 'px-5': true, 'bg-[#0070D1]': Platform === 'ps', 'text-white': Platform === 'ps', 'border-2': true, 'border-[#0070D1]': Platform !== 'ps',}">PlayStation</div>
+            <div @click="setPlatform('xbox')" :class="{'col-span-2': true, 'lg:col-span-1': true, 'cursor-pointer': true, 'w-full': true, 'py-2': true, 'px-5': true, 'bg-[#107C10]': Platform === 'xbox', 'text-white': Platform === 'xbox', 'border-2': true, 'border-[#107C10]': Platform !== 'xbox',}">Xbox</div>
           </div>
         </div>
       </div>
@@ -88,7 +89,7 @@ const screenName = computed({
 
 const Platform = computed(() => store.platform)
 
-const setPlatform = (platform: 'ns' | 'ps') => {
+const setPlatform = (platform: 'ns' | 'ps' | 'xbox') => {
   localStorage.platform = platform
   store.updateCoreValue('platform', platform)
   store.updateCoreValue('tweets', [])

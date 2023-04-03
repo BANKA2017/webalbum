@@ -31,7 +31,7 @@ onMounted(() => {
     store.updateCoreValue('screen_name', localStorage.screen_name)
   }
 
-  store.updateCoreValue('platform', localStorage.platform === 'ps' ? 'ps' : 'ns')
+  store.updateCoreValue('platform', ['ns', 'ps', 'xbox'].includes(localStorage.platform) ? localStorage.platform : 'ns')
 
   if (screenName.value) {
     useFetch<ApiUserInfo>('/data/userinfo/?name=' + screenName.value, {baseURL: basePath}).then(response => {

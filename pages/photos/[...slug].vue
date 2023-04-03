@@ -21,8 +21,8 @@
         </div>
         <div v-else class="w-full font-mono">
           <a class="block col-span-1 border-2 border-slate-300 hover:border-sky-500 w-full px-2 py-1 mb-3" :href="mediaPath + state.tweet[0].media[0].url" target="_blank">{{ state.tweet[0].media[0].basename }}</a>
-          <p :class="{'inline-block': true, 'rounded-full': true, 'text-white': true, 'text-sm': true, 'px-2': true, 'mr-2': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps'}">{{ `${state.tweet[0].media[0].origin_info_width}x${state.tweet[0].media[0].origin_info_height}` }}</p>
-          <p :class="{'inline-block': true, 'rounded-full': true, 'text-white': true, 'text-sm': true, 'px-2': true, 'mr-2': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps'}">{{ `${state.tweet[0].media[0].bitrate / 1000} kbps` }}</p>
+          <p :class="{'inline-block': true, 'rounded-full': true, 'text-white': true, 'text-sm': true, 'px-2': true, 'mr-2': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox'}">{{ `${state.tweet[0].media[0].origin_info_width}x${state.tweet[0].media[0].origin_info_height}` }}</p>
+          <p :class="{'inline-block': true, 'rounded-full': true, 'text-white': true, 'text-sm': true, 'px-2': true, 'mr-2': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox'}">{{ `${state.tweet[0].media[0].bitrate / 1000} kbps` }}</p>
         </div>
         <hr class="my-3" />
         <p class="my-3">{{new Date(state.tweet[0].time * 1000).toLocaleString()}}</p>

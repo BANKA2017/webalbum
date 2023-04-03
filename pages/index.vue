@@ -8,13 +8,13 @@
     </div>
     <template v-else>
       <div class="snap-x snap-mandatory flex flex-nowrap flex-row overflow-auto scroll-smooth">
-        <NuxtLink :to="{path: '/', query: {game: Object.keys(game.tags).includes(queryGame) ? undefined : game.mostTag}}" v-for="game in tagList" :key="game.gameId" :class="{'inline-block': true, 'mr-2': true, 'mb-2': true, 'px-3': true, 'py-1': true, 'rounded-xl': true, 'border-2': true, 'text-sm': true, 'bg-[#E60012]': platform === 'ns' && Object.keys(game.tags).includes(queryGame), 'bg-[#0070D1]': platform === 'ps' && Object.keys(game.tags).includes(queryGame), 'text-white': Object.keys(game.tags).includes(queryGame), 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps', 'snap-always': true, 'snap-center': true, 'flex-none': true, }" >{{game.mostTag}} <span class="ml-1 bg-gray-500 rounded-lg py-0.5 px-1 text-white text-sm font-mono">{{game.count}}</span></NuxtLink>
+        <NuxtLink :to="{path: '/', query: {game: Object.keys(game.tags).includes(queryGame) ? undefined : game.mostTag}}" v-for="game in tagList" :key="game.gameId" :class="{'inline-block': true, 'mr-2': true, 'mb-2': true, 'px-3': true, 'py-1': true, 'rounded-xl': true, 'border-2': true, 'text-sm': true, 'bg-[#E60012]': platform === 'ns' && Object.keys(game.tags).includes(queryGame), 'bg-[#0070D1]': platform === 'ps' && Object.keys(game.tags).includes(queryGame), 'bg-[#107C10]': platform === 'xbox' && Object.keys(game.tags).includes(queryGame), 'text-white': Object.keys(game.tags).includes(queryGame), 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps', 'border-[#107C10]': platform === 'xbox', 'snap-always': true, 'snap-center': true, 'flex-none': true, }" >{{game.mostTag}} <span class="ml-1 bg-gray-500 rounded-lg py-0.5 px-1 text-white text-sm font-mono">{{game.count}}</span></NuxtLink>
       </div>
       <div class="my-2" v-for="(photos, date) in realData" :key="date">
         <div class="justify-between flex sticky py-2 top-0 bg-white group/date cursor-pointer" style="z-index: 9990" @click="(e) => {selectEvent(e, photos, false, !checkExist(photos))}">
             <h3 class="text-4xl font-sans bg-white inline-block" style="z-index: 9990">{{ date }}</h3>
             <div :class="{'inline-block':true, }" >
-                <div :class="{'w-5': true, 'rounded-full': true, 'bg-gray-700': !checkExist(photos), 'bg-[#E60012]': checkExist(photos) && platform === 'ns', 'bg-[#0070D1]': checkExist(photos) && platform === 'ps', 'text-white': true, 'my-2': true, 'group-hover/date:opacity-100': true, 'opacity-0': !selectedMode , 'transition': true}">
+                <div :class="{'w-5': true, 'rounded-full': true, 'bg-gray-700': !checkExist(photos), 'bg-[#E60012]': checkExist(photos) && platform === 'ns', 'bg-[#0070D1]': checkExist(photos) && platform === 'ps', 'bg-[#107C10]': checkExist(photos) && platform === 'xbox', 'text-white': true, 'my-2': true, 'group-hover/date:opacity-100': true, 'opacity-0': !selectedMode , 'transition': true}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                         <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
@@ -26,7 +26,7 @@
           <router-link :class="{'cursor-pointer': true, 'bg-slate-300': true, 'aspect-video': true, 'border-2': true, 'border-white': !state.selectedList.has(meta), 'border-sky-700': selectedMode && state.selectedList.has(meta), 'hover:border-sky-700': true, 'select-none': true, }" v-for="(meta, order) in photos" :key="order" :to="`/photos/${meta.tweet_id}/${meta.index}`">
             <div class="relative w-full aspect-video cover-item group/cover" @click="(e) => {selectEvent(e, [meta], false)}" >
               <div :class="{absolute: true, 'p-2': true, 'rounded-full': true, 'text-sm': true, 'text-white': true, 'group-hover/cover:block': true, hidden: !selectedMode}" @click="(e) => {selectEvent(e, [meta], true)}">
-                  <div :class="{'w-5': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'rounded-full': true, }">
+                  <div :class="{'w-5': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox', 'rounded-full': true, }">
                       <svg v-if="state.selectedList.has(meta)" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
                           <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                           <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
@@ -36,8 +36,8 @@
                       </svg>
                   </div>
               </div>
-              <div :class="{absolute: true, 'top-2': true, 'right-2': true, 'px-1': true, 'text-sm': true, 'text-white': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps'}" v-if="meta.origin_type !== 'photo'">VIDEO</div>
-              <a :href="mediaPath + meta.url + (meta.origin_type === 'photo' ? ':orig' : '')" :class="{absolute: true, 'bottom-2': true, 'right-2': true, 'px-1': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'text-sm': true, 'text-white': true, 'w-8': true, 'h-8': true, 'transition-all': true, 'duration-150': true, 'dl': true}" target="_blank" @click="e => {e.stopPropagation()}" v-if="!selectedMode">
+              <div :class="{absolute: true, 'top-2': true, 'right-2': true, 'px-1': true, 'text-sm': true, 'text-white': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox', }" v-if="meta.origin_type !== 'photo'">VIDEO</div>
+              <a :href="mediaPath + meta.url + (meta.origin_type === 'photo' ? ':orig' : '')" :class="{absolute: true, 'bottom-2': true, 'right-2': true, 'px-1': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox', 'text-sm': true, 'text-white': true, 'w-8': true, 'h-8': true, 'transition-all': true, 'duration-150': true, 'dl': true}" target="_blank" @click="e => {e.stopPropagation()}" v-if="!selectedMode">
                 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
                   <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
                   <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
@@ -50,7 +50,7 @@
       </div>
       <div class="my-2 flex justify-center">
         <div v-if="hasmore" class="border-cyan-600 hover:bg-slate-100 cursor-pointer border-2 rounded-full px-5 py-1 font-bold text-lg select-none" @click="load(maxId, queryGame)">
-          <svg v-if="state.loadmore" :class="{'animate-spin': true, '-ml-1': true, 'mr-1': true, 'h-5': true, 'w-5': true, 'inline-block': true, 'text-[#E60012]': platform === 'ns', 'text-[#0070D1]': platform === 'ps'}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <svg v-if="state.loadmore" :class="{'animate-spin': true, '-ml-1': true, 'mr-1': true, 'h-5': true, 'w-5': true, 'inline-block': true, 'text-[#E60012]': platform === 'ns', 'text-[#0070D1]': platform === 'ps', 'text-[#107C10]': platform === 'xbox', }" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
@@ -58,19 +58,19 @@
         </div>
       </div>
     </template>
-    <div :class="{'fixed': true, 'right-5': true, 'bottom-32': true, 'cursor-pointer': true, 'border-2': true, 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps', 'transition-colors': true, 'duration-150': true, 'select-none': true, }" style="z-index: 9999" v-if="selectedMode">
+    <div :class="{'fixed': true, 'right-5': true, 'bottom-32': true, 'cursor-pointer': true, 'border-2': true, 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps', 'border-[#107C10]': platform === 'xbox', 'transition-colors': true, 'duration-150': true, 'select-none': true, }" style="z-index: 9999" v-if="selectedMode">
         <div class="px-2 py-1 text-center relative overflow-hidden bg-white">
             <span >{{ state.selectedList.size }}</span>
-            <div :class="{'px-2':true, 'py-1':true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'text-white': true, 'absolute':true, 'top-0':true, 'left-0':true, 'opacity-0':true, 'hover:opacity-100':true,}" @click="(e) => {downloadControllerList[downloadControllerList.length - 1].abort();selectEvent(e, [...state.selectedList], true);}">
+            <div :class="{'px-2':true, 'py-1':true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox', 'text-white': true, 'absolute':true, 'top-0':true, 'left-0':true, 'opacity-0':true, 'hover:opacity-100':true,}" @click="(e) => {downloadControllerList[downloadControllerList.length - 1].abort();selectEvent(e, [...state.selectedList], true);}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                 </svg>
             </div>
         </div>
-        <div v-if="state.downloadCount" :class="{'px-2':true, 'py-1':true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'text-white': true, 'text-center': true, 'w-[2.5em]': true, }">
+        <div v-if="state.downloadCount" :class="{'px-2':true, 'py-1':true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox', 'text-white': true, 'text-center': true, 'w-[2.5em]': true, }">
             <span >{{ state.downloadCount }}</span>
         </div>
-        <div v-else :class="{'px-2':true, 'py-1':true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'text-white': true}" @click="downloadAll()">
+        <div v-else :class="{'px-2':true, 'py-1':true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox', 'text-white': true}" @click="downloadAll()">
             <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
                 <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
                 <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>

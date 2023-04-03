@@ -17,7 +17,7 @@ export interface State {
     display_name: string
     avatar: string
   }
-  platform: 'ns' | 'ps'
+  platform: 'ns' | 'ps' | 'xbox'
   status: 0 | 1 | 2
   loading: boolean
   tweets: Tweet[]
