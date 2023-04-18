@@ -4,7 +4,8 @@ import NodeGlobalsPolyfillPlugin from "@esbuild-plugins/node-globals-polyfill";
 export default defineNuxtConfig({
   ssr: false,
   devServer: {
-    host: '0.0.0.0'
+    host: '0.0.0.0',
+    port: 3001
   },
   runtimeConfig: {
     public: {

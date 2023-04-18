@@ -4,45 +4,47 @@
       <!--<p class="bg-black dark:bg-white text-3xl px-5 py-2 text-white dark:text-black">SETTINGS</p>-->
       <!--<p :class="{'text-2xl': true, 'px-5': true, 'py-2': true, 'text-white': true, 'hover:bg-slate-800': true, 'border-4': true, 'border-transparent': true, 'hover:text-teal-300': true, 'cursor-pointer': true, 'select-none': true, 'text-teal-300': state.page === key, 'bg-slate-800': state.page === key, 'border-cyan-500': state.page === key}" v-for="(value, key) in SettingsList" :key="key" @click="state.page = key">
         {{ value }}</p>-->
-      <p class="text-2xl px-5 py-2 border-4 border-cyan-500 cursor-pointer select-none hover:bg-slate-100">Account</p>
+      <p class="text-2xl px-5 py-2 border-4 border-cyan-500 cursor-pointer select-none hover:bg-slate-100">Accounts</p>
     </div>
     <div class="md:col-start-2 md:col-span-2 w-full md:border-l-4 md:border-l-transparent px-0 md:px-10">
       <div class="grid grid-cols-10">
-        <div class="col-start-1 col-span-4 px-0 sm:px-2 md:px-0 xl:px-5">
-          <div v-if="!userInfo.avatar" class="aspect-square w-full bg-slate-300 animate-pulse"/>
-          <img v-else class="aspect-square w-full bg-slate-300" :src="mediaPath + userInfo.avatar" :alt="userInfo.display_name" />
+        <div class="col-span-2 px-0 sm:px-2 md:px-0 xl:px-5">
+          <div v-if="!userInfo.avatar" class="aspect-square w-full bg-slate-300 animate-pulse rounded-xl"/>
+          <img v-else class="aspect-square w-full bg-slate-300 rounded-xl" :src="mediaPath + userInfo.avatar" :alt="userInfo.display_name" />
         </div>
-        <div class="col-start-5 col-span-7 p-5 divide-gray-900">
+        <div class="col-span-8 px-5 divide-gray-900">
           <div v-if="!state.editMode">
-            <div class="flex justify-between items-center mb-2">
-              <span v-if="screenName" :class="{'text-2xl': true, 'animate-pulse': !userInfo.display_name, 'bg-slate-300': !userInfo.display_name, 'h-8': !userInfo.screen_name, 'w-32': !userInfo.display_name,}">{{ userInfo.display_name ? userInfo.display_name : '' }}</span>
+            <div class="flex justify-between items-center">
+              <span v-if="screenName" :class="{'text-2xl': true, 'animate-pulse': !userInfo.display_name, 'bg-slate-300': !userInfo.display_name, 'h-6': !userInfo.screen_name, 'w-32': !userInfo.display_name, 'rounded-xl': !userInfo.display_name, }">{{ userInfo.display_name ? userInfo.display_name : '' }}</span>
               <span v-else class="text-2xl ">Twitter username</span>
-              <span class="cursor-pointer hover:bg-slate-200 " @click="state.editMode = !state.editMode">
+              <div class="cursor-pointer hover:bg-slate-200 p-3 rounded-full" @click="state.editMode = !state.editMode">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                 </svg>
-              </span>
+              </div>
             </div>
-            <p v-if="screenName" :class="{'text-sm': true, 'animate-pulse': !userInfo.screen_name, 'bg-slate-300': !userInfo.screen_name, 'h-5': !userInfo.screen_name, 'w-15': !userInfo.screen_name,}">{{ userInfo.screen_name ? '@' + userInfo.screen_name : '' }}</p>
+            <div v-if="screenName" :class="{'text-sm': true, 'animate-pulse': !userInfo.screen_name, 'bg-slate-300': !userInfo.screen_name, 'h-5': !userInfo.screen_name, 'w-15': !userInfo.screen_name, 'rounded-xl': !userInfo.display_name, }">{{ userInfo.screen_name ? '@' + userInfo.screen_name : '' }}</div>
           </div>
-          <div v-else class="grid grid-cols-12 items-center ">
-            <div class="col-span-12"><label class="font-bold" for="input-screen-name">Screen Name</label></div>
-            <div class="col-start-1 col-span-11 ">
-              <input id="input-screen-name" type="text" class="form-input w-full" v-model="screenName">
+          <div v-else class="grid grid-cols-12 items-center gap-2 mb-6">
+            <div class="col-span-10 ">
+              <input id="input-screen-name" type="text" class="form-input w-full rounded-xl" v-model="screenName" placeholder="Screen Name">
             </div>
-            <span class="cursor-pointer col-start-12 ml-2 hover:text-gray-700" @click="state.editMode = !state.editMode">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-              </svg>
+            <div class="cursor-pointer col-span-1 hover:bg-gray-200 p-2 rounded-full" @click="screenName = ''">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </div>
+            <span class="cursor-pointer col-span-1 hover:bg-gray-200 p-2 rounded-full" @click="state.editMode = !state.editMode">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+  <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+</svg>
             </span>
           </div>
-          <hr class="my-5">
-          <label class="font-bold mb-3">Platform</label>
-          <div class="grid grid-cols-2 gap-2">
-            <div @click="setPlatform('ns')" :class="{'col-span-2': true, 'lg:col-span-1': true, 'cursor-pointer': true, 'w-full': true, 'py-2': true, 'px-5': true, 'bg-[#E60012]': Platform === 'ns', 'text-white': Platform === 'ns', 'border-2': true, 'border-[#E60012]': Platform !== 'ns',}">Nintendo Switch</div>
-            <div @click="setPlatform('ps')" :class="{'col-span-2': true, 'lg:col-span-1': true, 'cursor-pointer': true, 'w-full': true, 'py-2': true, 'px-5': true, 'bg-[#0070D1]': Platform === 'ps', 'text-white': Platform === 'ps', 'border-2': true, 'border-[#0070D1]': Platform !== 'ps',}">PlayStation</div>
-            <div @click="setPlatform('xbox')" :class="{'col-span-2': true, 'lg:col-span-1': true, 'cursor-pointer': true, 'w-full': true, 'py-2': true, 'px-5': true, 'bg-[#107C10]': Platform === 'xbox', 'text-white': Platform === 'xbox', 'border-2': true, 'border-[#107C10]': Platform !== 'xbox',}">Xbox</div>
+          <div class="grid grid-cols-3 gap-2 mt-1">
+            <div @click="setPlatform('ns')" :class="{'col-span-3': true, 'lg:col-span-1': true, 'cursor-pointer': true, 'w-full': true, 'py-2': true, 'px-5': true, 'bg-[#E60012]': Platform === 'ns', 'text-white': Platform === 'ns', 'border-2': true, 'border-[#E60012]': Platform !== 'ns',}">Nintendo Switch</div>
+            <div @click="setPlatform('ps')" :class="{'col-span-3': true, 'lg:col-span-1': true, 'cursor-pointer': true, 'w-full': true, 'py-2': true, 'px-5': true, 'bg-[#0070D1]': Platform === 'ps', 'text-white': Platform === 'ps', 'border-2': true, 'border-[#0070D1]': Platform !== 'ps',}">PlayStation</div>
+            <div @click="setPlatform('xbox')" :class="{'col-span-3': true, 'lg:col-span-1': true, 'cursor-pointer': true, 'w-full': true, 'py-2': true, 'px-5': true, 'bg-[#107C10]': Platform === 'xbox', 'text-white': Platform === 'xbox', 'border-2': true, 'border-[#107C10]': Platform !== 'xbox',}">Xbox</div>
           </div>
         </div>
       </div>
