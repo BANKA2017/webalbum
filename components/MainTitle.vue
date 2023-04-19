@@ -8,7 +8,7 @@
 
       <div class="flex justify-end items-center">
         {{screen_name}}
-        <router-link to="/settings" class="border-2 border-cyan-500 hover:bg-slate-100 px-3 py-1" v-if="!screen_name">
+        <router-link to="/settings" :class="{'border-2': true, 'hover:bg-slate-100': true, 'px-3': true, 'py-1': true, 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps', 'border-[#107C10]': platform === 'xbox'}" v-if="!screen_name">
           Settings
         </router-link>
         <router-link to="/settings" class="ml-2 bg-slate-200 rounded-full aspect-square w-[3em] " v-else>
