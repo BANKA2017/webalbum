@@ -6,6 +6,9 @@
       <p class="text-lg">Q: Why can't I share screen screenshots/videos to Twitter?</p>
       <p class="text-lg">A: Unfortunately, I don't own any NS/PS/Xbox devices, so I can't answer these kinds of questions. In fact, the idea for this site came from a suggestion from a friend of mine.</p>
       <hr class="my-3" />
+      <p class="text-lg">Q: Can I view content shared from outside NS/PS/Xbox?</p>
+      <p class="text-lg">A: Unfortunately, No, we only support viewing content that has been shared from NS/PS/Xbox.</p>
+      <hr class="my-3" />
       <p class="text-lg">Q: I saw a picture/video I posted with you, how do I ask you to remove it?</p>
       <p class="text-lg">A: We do not have the power to manage users' Twitter accounts, so we cannot delete them. Users can delete the corresponding tweets from Twitter. Alternatively, if you don't want others to see your tweets, my advice is to link your NS/PS/Xbox account to a protected Twitter account, or simply not share them.</p>
       <hr class="my-3" />
@@ -23,7 +26,12 @@
           <div class="p-5 rounded-xl bg-gray-100 font-mono col-span-2 lg:col-span-1">{{queryContent}}</div>
       </div>
 
-      <div class=" flex flex-col items-end mt-5 text-sm">
+      <h3 class="text-2xl font-bold my-5">Donating</h3>
+      <ul>
+          <li class="text-lg"><span class="font-bold">Patreon</span>: <NuxtLink href="https://www.patreon.com/banka2017" target="_blank" class="underline underline-offset-2">https://patreon.com/banka2017</NuxtLink></li>
+      </ul>
+
+      <div class=" flex flex-col items-end mt-5 mb-14 text-sm">
           <p>Translated by DeepL, written by <NuxtLink href="https://nest.moe" class="font-bold hover:underline underline-offset-2">MANKA</NuxtLink> with ❤️</p>
       </div>
   </div>
