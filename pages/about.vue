@@ -32,7 +32,7 @@
       </ul>
 
       <div class=" flex flex-col items-end mt-5 mb-14 text-sm">
-          <p>Translated by OpenAI gpt-3.5, written by <NuxtLink href="https://nest.moe" class="font-bold hover:underline underline-offset-2">MANKA</NuxtLink> with ❤️</p>
+          <p>Translated by OpenAI GPT-3.5, written by <NuxtLink href="https://nest.moe" class="font-bold hover:underline underline-offset-2">MANKA</NuxtLink> with ❤️</p>
       </div>
   </div>
 </template>

@@ -15,8 +15,8 @@
           <div v-if="media[state.activeIndex].origin_type === 'photo'" class="font-sans text-black text-3xl block bg-transparent lg:hidden absolute bottom-5 right-5 select-none" style="z-index: 9999">
             <p>{{(state.activeIndex + 1) + ' / ' + media.length}}</p>
           </div>
-          <img v-if="media[state.activeIndex].origin_type === 'photo'" class="w-full aspect-video w-full bg-slate-300 object-scale-down" :src="mediaPath + media[state.activeIndex].cover + ':orig'" loading="lazy" :alt="media[state.activeIndex].filename" @load="state.loadingImage = false">
-          <video v-else controls :poster="mediaPath + media[state.activeIndex].cover" :src="mediaPath + media[state.activeIndex].url" class="w-full aspect-video w-full bg-slate-300 object-scale-down" @loadedmetadata="state.loadingImage = false" />
+          <img v-if="media[state.activeIndex].origin_type === 'photo'" class="aspect-video w-full bg-slate-300 object-scale-down" :src="mediaPath + media[state.activeIndex].cover + ':orig'" loading="lazy" :alt="media[state.activeIndex].filename" @load="state.loadingImage = false">
+          <video v-else controls :poster="mediaPath + media[state.activeIndex].cover" :src="mediaPath + media[state.activeIndex].url" class="aspect-video w-full bg-slate-300 object-scale-down" @loadedmetadata="state.loadingImage = false" />
         </div>
       </div>
       <!--小图预览-->
