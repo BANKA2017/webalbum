@@ -13,11 +13,11 @@ import {ApiUserInfo} from "~/type/Api";
 useHead({
   charset: 'utf-8',
   htmlAttrs: {
-    lang: "zh"
+    lang: "en"
   },
-  title: 'Web Album',
+  title: 'Game Album',
   keywords: 'Nintendo Switch Album, Playstation Album, Twitter Album',
-  description: 'Web Album'
+  description: 'An Online Album for Sharing and Downloading Screenshots and Videos from NS/PS/Xbox'
 })
 
 const config = useRuntimeConfig()

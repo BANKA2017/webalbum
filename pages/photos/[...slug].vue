@@ -32,14 +32,6 @@
         <a :href="`https://twitter.com/i/status/${state.tweet[0].tweet_id}`" class="my-3 bg-[#1da1f2] hover:bg-[#2488bf] px-2 py-2 w-full block transition-colors duration-150" target="_blank">
           <span class="after:content-['_↗'] text-white no-underline select-none">Twitter</span>
         </a>
-
-        <!--<a :href="`https://twitter.com/i/status/${state.tweet[0].tweet_id}`" class="my-3 bg-[#1da1f2] hover:bg-[#2488bf] px-2 py-2 w-full block transition-colors duration-150">
-          <span class="after:content-['_↓'] text-white no-underline">Download</span>
-        </a>-->
-        <!--<div class="border-2 p-5">
-          <h4 class="text-xl font-bold">提示</h4>
-          <p >右键下载图片</p>
-        </div>-->
       </div>
     </div>
     <div v-else class="animate-pulse grid grid-cols-4 my-10 gap-10">

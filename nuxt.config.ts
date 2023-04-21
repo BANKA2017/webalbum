@@ -1,5 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import NodeGlobalsPolyfillPlugin from "@esbuild-plugins/node-globals-polyfill";
 
 export default defineNuxtConfig({
   ssr: false,
