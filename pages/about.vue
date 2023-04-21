@@ -13,7 +13,7 @@
       <p class="text-lg">A: We are unable to delete this content as we do not have control over the tweets. In fact, anyone can easily find these contents through a simple search command (please check the components below). We suggest that you bind your NS/PS/Xbox to a protected Twitter account or simply refrain from sharing screenshots.</p>
       <hr class="my-3" />
       <p class="text-lg">Q: Can I view these tweets directly on Twitter?</p>
-      <p class="text-lg">A: Yes, you can. Fill in the information below and <NuxtLink :href="`https://twitter.com/search?q=${queryContent}&f=live`" class="underline underline-offset-2">click here</NuxtLink>.</p>
+      <p class="text-lg">A: Yes, you can. Fill in the information below and <NuxtLink :href="`https://twitter.com/search?q=${queryContent}&f=live`" class="underline underline-offset-2" target="_blank">click here</NuxtLink>.</p>
       <div class="grid grid-cols-2 gap-5 mt-5">
           <div class="col-span-2 lg:col-span-1">
               <input class="form-input rounded-xl w-full" placeholder="Twitter username like @twitter" v-model="state.screen_name">
