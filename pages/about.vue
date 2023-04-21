@@ -60,7 +60,7 @@ const queryContent = computed(() => {
   const platform = ['ns', 'ps', 'xbox'].includes(state.platform) ? platformList[state.platform] : platformList['ns']
   const queryArray = ['filter:twimg OR filter:consumer_video OR filter:pro_video', `source:${platform}`]
   if (platform === 'xbox_one_social') {
-    queryArray.push(`OR source:xbox_game_bar`)//for game bar
+    queryArray.push(`OR source:xbox_game_bar OR #XboxShare`)//for game bar and android/iOS app
   }
   if (name !== '') {
     queryArray.push(`from:${name}`)
