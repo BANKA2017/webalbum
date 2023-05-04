@@ -112,6 +112,7 @@ const basePath = config.public.NUXT_BASE_PATH
 const mediaPath = config.public.NUXT_MEDIA_PATH
 const maxId = computed(() => store.maxId)
 const hasmore = computed(() => store.hasmore)
+const hashtagsCount = computed(() => store.hashtags_count)
 
 const route = useRoute()
 const cancelToken = controller
@@ -234,7 +235,7 @@ const tagList = computed(() => {
 
 const realData = computed(() => {
   let tmpData: {[p: string]: Media[]} = {}
-  tweets.value.map(x => x.media.map((y, index) => {
+  tweets.value.filter(tweet => tweet.entities.length <= hashtagsCount.value).map(x => x.media.map((y, index) => {
     let tmpDate = new Date(x.time * 1000)
     //console.log(tmpDate.getFullYear() + '.' + (tmpDate.getMonth() + 1))
     y.index = index + 1

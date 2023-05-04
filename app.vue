@@ -30,6 +30,10 @@ onMounted(() => {
   if (localStorage.screen_name) {
     store.updateCoreValue('screen_name', localStorage.screen_name)
   }
+  if (localStorage.hashtags_count) {
+    let tmpCount = Number(localStorage.hashtags_count)
+    store.updateCoreValue('hashtags_count', tmpCount ? tmpCount : 20 )
+  }
 
   store.updateCoreValue('platform', ['ns', 'ps', 'xbox'].includes(localStorage.platform) ? localStorage.platform : 'ns')
 

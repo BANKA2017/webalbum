@@ -7,7 +7,7 @@
       <p class="text-lg">A: Unfortunately, no. We can only view screenshots/videos shared from the NS/PS/Xbox sharing services.</p>
       <hr class="my-3" />
       <p class="text-lg">Q: Are you open source?</p>
-      <p class="text-lg">A: Yes, our backend is <NuxtLink href="https://github.com/BANKA2017/twitter-monitor/tree/node/apps/cfworkers" target="_blank" class="underline underline-offset-2">open source</NuxtLink> and the frontend will also be open sourced <span class="underline underline-offset-2 decoration-dotted">soon</span>.</p>
+      <p class="text-lg">A: Yes, our <NuxtLink href="https://github.com/BANKA2017/twitter-monitor/tree/node/apps/cfworkers" target="_blank" class="underline underline-offset-2">backend</NuxtLink> and <NuxtLink href="https://github.com/BANKA2017/webalbum" target="_blank" class="underline underline-offset-2">frontend</NuxtLink> are both open source.</p>
       <hr class="my-3" />
       <p class="text-lg">Q: I see the screenshots/videos I sent here, how do I request for you to delete them?</p>
       <p class="text-lg">A: We are unable to delete this content as we do not have control over the tweets. In fact, anyone can easily find these contents through a simple search command (please check the components below). We suggest that you bind your NS/PS/Xbox to a protected Twitter account or simply refrain from sharing screenshots.</p>
@@ -16,7 +16,8 @@
       <p class="text-lg">A: Yes, you can. Fill in the information below and <NuxtLink :href="`https://twitter.com/search?q=${queryContent}&f=live`" class="underline underline-offset-2" target="_blank">click here</NuxtLink>.</p>
       <div class="grid grid-cols-2 gap-5 mt-5">
           <div class="col-span-2 lg:col-span-1">
-              <input class="form-input rounded-xl w-full" placeholder="Twitter username like @twitter" v-model="state.screen_name">
+              <label for="about-screen_name-input" class="text-gray-400 text-sm">Separate multiple accounts with a space, or leave it blank for global search.</label>
+              <input id="about-screen_name-input" class="form-input rounded-xl w-full" placeholder="Twitter username like @twitter" v-model="state.screen_name">
               <div class="grid grid-cols-3 mt-5 gap-2">
                   <div @click="state.platform = 'ns'" :class="{'col-span-3': true, 'lg:col-span-1': true, 'cursor-pointer': true, 'w-full': true, 'py-2': true, 'px-5': true, 'bg-[#E60012]': state.platform === 'ns', 'text-white': state.platform === 'ns', 'border-2': true, 'border-[#E60012]': state.platform !== 'ns',}">Nintendo Switch</div>
                   <div @click="state.platform = 'ps'" :class="{'col-span-3': true, 'lg:col-span-1': true, 'cursor-pointer': true, 'w-full': true, 'py-2': true, 'px-5': true, 'bg-[#0070D1]': state.platform === 'ps', 'text-white': state.platform === 'ps', 'border-2': true, 'border-[#0070D1]': state.platform !== 'ps',}">PlayStation</div>
@@ -63,7 +64,7 @@ const queryContent = computed(() => {
     queryArray.push(`OR source:xbox_game_bar OR #XboxShare`)//for game bar and android/iOS app
   }
   if (name !== '') {
-    queryArray.push(`from:${name}`)
+    queryArray.push(name.split(' ').filter(tmpName => tmpName).map(tmpName => `from:${tmpName.startsWith('@') ? tmpName.slice(1) : tmpName}`).join(' OR '))
   }
   return queryArray.join(' ')
 })

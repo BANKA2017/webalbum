@@ -4,7 +4,7 @@
       <!--<p class="bg-black dark:bg-white text-3xl px-5 py-2 text-white dark:text-black">SETTINGS</p>-->
       <!--<p :class="{'text-2xl': true, 'px-5': true, 'py-2': true, 'text-white': true, 'hover:bg-slate-800': true, 'border-4': true, 'border-transparent': true, 'hover:text-teal-300': true, 'cursor-pointer': true, 'select-none': true, 'text-teal-300': state.page === key, 'bg-slate-800': state.page === key, 'border-cyan-500': state.page === key}" v-for="(value, key) in SettingsList" :key="key" @click="state.page = key">
         {{ value }}</p>-->
-      <div :class="{'text-2xl': true, 'px-5': true, 'py-2': true, 'border-4': true, 'cursor-pointer': true, 'select-none': true, 'hover:bg-slate-100': true, 'border-[#E60012]': Platform === 'ns', 'border-[#0070D1]': Platform === 'ps', 'border-[#107C10]': Platform === 'xbox'}">Accounts</div>
+      <div :class="{'text-2xl': true, 'px-5': true, 'py-2': true, 'border-4': true, 'cursor-pointer': true, 'select-none': true, 'hover:bg-slate-100': true, 'border-[#E60012]': Platform === 'ns', 'border-[#0070D1]': Platform === 'ps', 'border-[#107C10]': Platform === 'xbox'}">Settings</div>
     </div>
     <div class="md:col-start-2 md:col-span-2 w-full md:border-l-4 md:border-l-transparent px-0 md:px-10">
       <div class="grid grid-cols-10">
@@ -48,6 +48,11 @@
           </div>
         </div>
       </div>
+      <hr class="my-5" />
+      <div class="px-0 md:px-5">
+        <input id="input-hashtags-count" type="number" min="0" class="form-input w-full rounded-xl h-[2em] md:h-[2.5em]" v-model="hashtagsCount" placeholder="Count">
+        <label for="input-hashtags-count" class="mb-3">The images of tweets that exceed the number of hashtags will be filtered out from the public timeline, but there is no restriction on personal timelines.</label>
+      </div>
     </div>
   </div>
 </template>
@@ -77,6 +82,7 @@ const state = reactive<{
 const config = useRuntimeConfig()
 const store = useMainStore()
 const userInfo = computed(() => store.userInfo)
+
 const basePath = config.public.NUXT_BASE_PATH
 const mediaPath = config.public.NUXT_MEDIA_PATH
 
@@ -86,6 +92,15 @@ const screenName = computed({
     store.updateCoreValue('screen_name', value)
     localStorage.screen_name = value
     store.updateCoreValue('tweets', [])
+  }
+})
+
+const hashtagsCount = computed({
+  get () {return store.hashtags_count},
+  set (value: number) {
+    console.log(value)
+    store.updateCoreValue('hashtags_count', value)
+    localStorage.hashtags_count = value
   }
 })
 

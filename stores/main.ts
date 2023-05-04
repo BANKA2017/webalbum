@@ -8,6 +8,7 @@ export const useMainStore = defineStore('main', {
     userTimeZone: '',
 
     screen_name: '',
+    hashtags_count: 20,
     userInfo: {
       uid: '0',
       screen_name: '',

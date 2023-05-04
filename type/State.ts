@@ -11,6 +11,8 @@ export interface State {
   userTimeZone: string
 
   screen_name: string
+  hashtags_count: number
+
   userInfo: {
     uid: string
     screen_name: string
