@@ -10,7 +10,7 @@
       <p class="text-lg">A: Yes, our <NuxtLink href="https://github.com/BANKA2017/twitter-monitor/tree/node/apps/cfworkers" target="_blank" class="underline underline-offset-2">backend</NuxtLink> and <NuxtLink href="https://github.com/BANKA2017/webalbum" target="_blank" class="underline underline-offset-2">frontend</NuxtLink> are both open source.</p>
       <hr class="my-3" />
       <p class="text-lg">Q: I see the screenshots/videos I sent here, how do I request for you to delete them?</p>
-      <p class="text-lg">A: We are unable to delete this content as we do not have control over the tweets. In fact, anyone can easily find these contents through a simple search command (please check the components below). We suggest that you bind your NS/PS/Xbox to a protected Twitter account or simply refrain from sharing screenshots.</p>
+      <p class="text-lg">A: We are unable to delete this content as we do not have control over the tweets. In fact, anyone can easily find these contents through a simple search command (please check the components below). We suggest that you link your NS/PS/Xbox to a protected Twitter account or simply refrain from sharing screenshots.</p>
       <hr class="my-3" />
       <p class="text-lg">Q: Can I view these tweets directly on Twitter?</p>
       <p class="text-lg">A: Yes, you can. Fill in the information below and <NuxtLink :href="`https://twitter.com/search?q=${queryContent}&f=live`" class="underline underline-offset-2" target="_blank">click here</NuxtLink>.</p>
