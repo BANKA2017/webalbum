@@ -36,19 +36,19 @@
     <div v-else class="animate-pulse grid grid-cols-4 my-10 gap-10">
       <div class="col-start-1 col-span-4 md:col-span-3">
         <div class="mb-5">
-          <div class="w-full aspect-video bg-slate-300"></div>
+          <div class="w-full aspect-video bg-slate-200 dark:bg-slate-700"></div>
         </div>
         <!--小图预览-->
         <div class="inline-block md:w-[70%]">
-          <div class="bg-slate-300 inline-block aspect-square w-24 h-24 mr-5" v-for="i in [0,1,2,3]" :key="i"></div>
+          <div class="bg-slate-200 dark:bg-slate-700 inline-block aspect-square w-24 h-24 mr-5" v-for="i in new Array(4)" :key="i"></div>
         </div>
       </div>
       <div class="col-start-1 col-span-4 md:col-start-4 md:col-span-1">
-        <div class="h-5 bg-slate-200 rounded mb-2"></div>
-        <div class="h-5 bg-slate-200 rounded my-2"></div>
-        <div class="h-5 bg-slate-200 rounded my-2"></div>
-        <div class="aspect-video bg-slate-200 rounded my-2"></div>
-        <div class="h-10 bg-slate-200 rounded my-2"></div>
+        <div class="h-5 bg-slate-200 dark:bg-slate-700 rounded mb-2"></div>
+        <div class="h-5 bg-slate-200 dark:bg-slate-700 rounded my-2"></div>
+        <div class="h-5 bg-slate-200 dark:bg-slate-700 rounded my-2"></div>
+        <div class="aspect-video bg-slate-200 dark:bg-slate-700 rounded my-2"></div>
+        <div class="h-10 bg-slate-200 dark:bg-slate-700 rounded my-2"></div>
       </div>
     </div>
   </div>
@@ -61,6 +61,8 @@ import {useMainStore} from "~/stores/main";
 import {Tweet} from "~/type/Content";
 import {ApiTweets} from "~/type/Api";
 import {request} from "~/share/Fetch";
+import {onMounted} from "vue";
+import {useRoute} from "vue-router";
 
 useHead({title: 'Photos'})
 
@@ -78,7 +80,7 @@ const mediaPath = config.public.NUXT_MEDIA_PATH
 const storeTweets = computed(() => store.tweets)
 const platform = computed(() => store.platform)
 const tweets = computed(() => storeTweets.value.filter(x => x.tweet_id === route.params.slug[0].toString()))
-state.tweet = tweets.value
+
 const gameHash = computed(() => {
   if (!state.tweet[0]) {
     return []
@@ -87,16 +89,25 @@ const gameHash = computed(() => {
   }
 })
 
-if (state.tweet.length === 0) {
-  //get tweet online
-  request<ApiTweets>(basePath + "/data/list/?photos=1&tweet_id=" + route.params.slug[0].toString()).then(response => {
-    state.tweet = response.data.tweets//store.dispatch('setCoreValue', {key: 'tweets', value: response.data.tweets} )
-    //store.updateLoadingStatus(false)
-  }).catch(e => {
-    //store.updateLoadingStatus(false)
-    console.error(e)
-  })
-}
+onMounted(() => {
+  if (tweets.value.length > 0) {
+    state.tweet = tweets.value
+  } else if (state.tweet.length === 0 && tweets.value.length === 0) {
+    //get tweet online
+    request<ApiTweets>(basePath + "/data/list/?photos=1&tweet_id=" + route.params.slug[0].toString()).then(response => {
+      state.tweet = response.data.tweets
+      store.updateCoreValue('tweets', response.data.tweets)
+    }).catch(e => {
+      console.error(e)
+    })
+  }
+})
+
+onBeforeRouteLeave((to, from) => {
+  if (to.name !== 'photos-slug' && storeTweets.value.length === state.tweet.length) {
+    store.updateCoreValue('tweets', [])
+  }
+})
 
 definePageMeta({
   layout: "web-album",
