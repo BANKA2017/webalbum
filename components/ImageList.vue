@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <div class="font-sans md:text-3xl lg:text-[4rem] mt-5 hidden lg:block">
+        <div class="font-sans md:text-3xl lg:text-[4rem] mt-5 hidden lg:block dark:text-gray-200">
           <p>{{(state.activeIndex + 1) + ' / ' + media.length}}</p>
         </div>
       </div>

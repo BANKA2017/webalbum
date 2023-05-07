@@ -1,18 +1,18 @@
 <template>
   <div class="my-5">
     <div v-if="state.loading" class="animate-pulse space-y-4">
-      <div class="text-4xl font-sans my-4 w-[12vw] bg-slate-300 h-10"></div>
+      <div class="text-4xl font-sans my-4 w-[12vw] bg-slate-300 dark:bg-slate-700 h-10"></div>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-        <div class="bg-slate-300 aspect-video border-2 border-white select-none" v-for="i in [0,1,2,3,4]" :key="i"></div>
+        <div class="bg-slate-300 dark:bg-slate-700 aspect-video border-2 border-white dark:border-black select-none" v-for="i in new Array(5)" :key="i"></div>
       </div>
     </div>
     <template v-else>
       <div class="snap-x snap-mandatory flex flex-nowrap flex-row overflow-auto scroll-smooth">
-        <NuxtLink :to="{path: '/', query: {game: Object.keys(game.tags).includes(queryGame) ? undefined : game.mostTag}}" v-for="game in tagList" :key="game.gameId" :class="{'inline-block': true, 'mr-2': true, 'mb-2': true, 'px-3': true, 'py-1': true, 'rounded-xl': true, 'border-2': true, 'text-sm': true, 'bg-[#E60012]': platform === 'ns' && Object.keys(game.tags).includes(queryGame), 'bg-[#0070D1]': platform === 'ps' && Object.keys(game.tags).includes(queryGame), 'bg-[#107C10]': platform === 'xbox' && Object.keys(game.tags).includes(queryGame), 'text-white': Object.keys(game.tags).includes(queryGame), 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps', 'border-[#107C10]': platform === 'xbox', 'snap-always': true, 'snap-center': true, 'flex-none': true, }" >{{game.mostTag}} <span class="ml-1 bg-gray-500 rounded-lg py-0.5 px-1 text-white text-sm font-mono">{{game.count}}</span></NuxtLink>
+        <NuxtLink :to="{path: '/', query: {game: Object.keys(game.tags).includes(queryGame) ? undefined : game.mostTag}}" v-for="game in tagList" :key="game.gameId" :class="{'inline-block': true, 'mr-2': true, 'mb-2': true, 'px-3': true, 'py-1': true, 'rounded-xl': true, 'border-2': true, 'text-sm': true, 'bg-[#E60012]': platform === 'ns' && Object.keys(game.tags).includes(queryGame), 'bg-[#0070D1]': platform === 'ps' && Object.keys(game.tags).includes(queryGame), 'bg-[#107C10]': platform === 'xbox' && Object.keys(game.tags).includes(queryGame), 'dark:text-white': true, 'text-white': Object.keys(game.tags).includes(queryGame), 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps', 'border-[#107C10]': platform === 'xbox', 'snap-always': true, 'snap-center': true, 'flex-none': true, }" >{{game.mostTag}} <span class="ml-1 bg-gray-500 dark:bg-gray-700 rounded-lg py-0.5 px-1 text-white text-sm font-mono">{{game.count}}</span></NuxtLink>
       </div>
       <div class="my-2" v-for="(photos, date) in realData" :key="date">
-        <div class="justify-between flex sticky py-2 top-0 bg-white group/date cursor-pointer" style="z-index: 9990" @click="(e) => {selectEvent(e, photos, false, !checkExist(photos))}">
-            <h3 class="text-4xl font-sans bg-white inline-block" style="z-index: 9990">{{ date }}</h3>
+        <div class="justify-between flex sticky py-2 top-0 bg-white dark:bg-black group/date cursor-pointer" style="z-index: 9990" @click="(e) => {selectEvent(e, photos, false, !checkExist(photos))}">
+            <h3 class="text-4xl font-sans bg-white dark:bg-black dark:text-white inline-block" style="z-index: 9990">{{ date }}</h3>
             <div :class="{'inline-block':true, }" >
                 <div :class="{'w-5': true, 'rounded-full': true, 'bg-gray-700': !checkExist(photos), 'bg-[#E60012]': checkExist(photos) && platform === 'ns', 'bg-[#0070D1]': checkExist(photos) && platform === 'ps', 'bg-[#107C10]': checkExist(photos) && platform === 'xbox', 'text-white': true, 'my-2': true, 'group-hover/date:opacity-100': true, 'opacity-0': !selectedMode , 'transition': true}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          <router-link :class="{'cursor-pointer': true, 'bg-slate-300': true, 'aspect-video': true, 'border-2': true, 'border-white': !state.selectedList.has(meta), 'border-sky-700': selectedMode && state.selectedList.has(meta), 'hover:border-sky-700': true, 'select-none': true, }" v-for="(meta, order) in photos" :key="order" :to="`/photos/${meta.tweet_id}/${meta.index}`">
+          <router-link :class="{'cursor-pointer': true, 'bg-slate-300': true, 'dark:bg-slate-700': true, 'aspect-video': true, 'border-2': true, 'border-white': !state.selectedList.has(meta), 'dark:border-black': !state.selectedList.has(meta), 'border-sky-700': selectedMode && state.selectedList.has(meta), 'hover:border-sky-700': true, 'dark:border-sky-300': selectedMode && state.selectedList.has(meta), 'dark:hover:border-sky-300': true, 'select-none': true, }" v-for="(meta, order) in photos" :key="order" :to="`/photos/${meta.tweet_id}/${meta.index}`">
             <div class="relative w-full aspect-video cover-item group/cover" @click="(e) => {selectEvent(e, [meta], false)}" >
               <div :class="{absolute: true, 'p-2': true, 'rounded-full': true, 'text-sm': true, 'text-white': true, 'group-hover/cover:block': true, hidden: !selectedMode}" @click="(e) => {selectEvent(e, [meta], true)}">
                   <div :class="{'w-5': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox', 'rounded-full': true, }">
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="my-2 flex justify-center">
-        <div v-if="hasmore" class="border-cyan-600 hover:bg-slate-100 cursor-pointer border-2 rounded-full px-5 py-1 font-bold text-lg select-none" @click="load(maxId, queryGame)">
+        <div v-if="hasmore" class="border-cyan-600 hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-white cursor-pointer border-2 rounded-full px-5 py-1 font-bold text-lg select-none" @click="load(maxId, queryGame)">
           <svg v-if="state.loadmore" :class="{'animate-spin': true, '-ml-1': true, 'mr-1': true, 'h-5': true, 'w-5': true, 'inline-block': true, 'text-[#E60012]': platform === 'ns', 'text-[#0070D1]': platform === 'ps', 'text-[#107C10]': platform === 'xbox', }" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -59,7 +59,7 @@
       </div>
     </template>
     <div :class="{'fixed': true, 'right-5': true, 'bottom-32': true, 'cursor-pointer': true, 'border-2': true, 'border-[#E60012]': platform === 'ns', 'border-[#0070D1]': platform === 'ps', 'border-[#107C10]': platform === 'xbox', 'transition-colors': true, 'duration-150': true, 'select-none': true, }" style="z-index: 9999" v-if="selectedMode">
-        <div class="px-2 py-1 text-center relative overflow-hidden bg-white">
+        <div class="px-2 py-1 text-center relative overflow-hidden bg-white dark:bg-black dark:text-white">
             <span >{{ state.selectedList.size }}</span>
             <div :class="{'px-2':true, 'py-1':true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox', 'text-white': true, 'absolute':true, 'top-0':true, 'left-0':true, 'opacity-0':true, 'hover:opacity-100':true,}" @click="(e) => {downloadControllerList[downloadControllerList.length - 1].abort();selectEvent(e, [...state.selectedList], true);}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">

@@ -5,6 +5,7 @@ import {State} from "~/type/State";
 export const useMainStore = defineStore('main', {
   state: (): State => ({
     now: new Date(),
+    dark: '0',
     userTimeZone: '',
 
     screen_name: '',

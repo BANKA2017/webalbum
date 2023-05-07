@@ -1,6 +1,5 @@
 <template>
   <div id="photos">
-    {{tweet}}
     <div class="grid grid-cols-4 my-10 gap-10" v-if="state.tweet.length">
       <div class="col-start-1 col-span-4 md:col-span-3">
         <image-list :media="state.tweet[0].media" :video="false" />
@@ -10,7 +9,7 @@
           </div>
         </div>-->
       </div>
-      <div class="col-start-1 col-span-4 md:col-start-4 md:col-span-1">
+      <div class="col-start-1 col-span-4 md:col-start-4 md:col-span-1 dark:text-gray-200">
         <ul class="mb-2" v-if="gameHash.length > 0">
           <li v-for="(entity, order) in gameHash" :key="order"><NuxtLink :to="{path: '/', query: {game: entity}}" class="text-lg font-bold before:content-['#'] hover:underline hover:underline-offset-2" >{{ entity }}</NuxtLink></li>
         </ul>
