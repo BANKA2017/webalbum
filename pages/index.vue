@@ -87,6 +87,7 @@ import {Media} from "~/type/Content";
 import {Controller, controller, request} from "~/share/Fetch";
 import {ApiTweets} from "~/type/Api";
 import {Download} from "~/share/Tools"
+import {BlobReader, BlobWriter, ZipWriter} from "@zip.js/zip.js";
 
 useHead({title: "Album"})
 
@@ -274,7 +275,7 @@ const checkExist = (mediaList: Media[]) => {
 const downloadControllerList: AbortController[] = [new AbortController()]
 const downloadAll = async () => {
   downloadControllerList[downloadControllerList.length - 1].abort()
-  const blobList: {blob: string, filename: string}[] = []
+  const blobList: {blob: string, filename: string; blobObject: Blob}[] = []
   downloadControllerList.push(new Controller())
   let nowSignal = downloadControllerList[downloadControllerList.length - 1].signal
   for (const metaItem of [...state.selectedList]) {
@@ -285,7 +286,7 @@ const downloadAll = async () => {
       const response = await fetch(mediaPath + metaItem.url + (metaItem.url.endsWith('mp4') ? '' : ':orig'), {
         signal: nowSignal
       }).then(response => response.blob())
-      blobList.push({blob: URL.createObjectURL(response), filename: `${metaItem.uid}_${metaItem.tweet_id}_${metaItem.index}_${metaItem.filename}.${metaItem.extension}`})
+      blobList.push({blob: URL.createObjectURL(response), filename: `${metaItem.uid}_${metaItem.tweet_id}_${metaItem.index}_${metaItem.filename}.${metaItem.extension}`, blobObject: response})
     } catch (e) {
       console.log(e, metaItem)
     }
@@ -294,9 +295,14 @@ const downloadAll = async () => {
   setTimeout(() => {
     state.downloadCount = 0
   }, 1500)
-  blobList.forEach(blobItem => {
-    Download(blobItem.blob, blobItem.filename)
-  })
+    if (blobList.length) {
+        const zipWriter = new ZipWriter(new BlobWriter("application/zip"), { bufferedWrite: true, useCompressionStream: false });
+        blobList.forEach(blobItem => {
+            zipWriter.add(blobItem.filename, new BlobReader(blobItem.blobObject), {signal: nowSignal});
+        })
+        Download(URL.createObjectURL(await zipWriter.close()), `album_archive_${screenName.value ? screenName.value : 'Search'}_${platform.value}_${Date.now()}.zip`)
+    }
+
 }
 
 definePageMeta({
