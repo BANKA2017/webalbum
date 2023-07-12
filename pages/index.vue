@@ -141,8 +141,10 @@ const load = (tweet_id: string | number | bigint = -1, game: string = '') => {
       } else {
         store.updateCoreValue('tweets', response.data.tweets)
       }
-      store.updateCoreValue('maxId', response.data?.bottom_tweet_id || '0')
-      store.updateCoreValue('hasmore', response.data?.hasmore || false)
+      if (response.data.tweets.length) {
+        store.updateCoreValue('maxId', response.data?.bottom_tweet_id || '0')
+        store.updateCoreValue('hasmore', response.data?.hasmore || false)
+      }
     }
 
     state.loading = false
