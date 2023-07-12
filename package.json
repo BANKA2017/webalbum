@@ -9,24 +9,24 @@
   },
   "devDependencies": {
     "@nuxt/types": "^2.17.0",
-    "@types/node": "^20.3.1",
-    "@vueuse/core": "^10.2.0",
-    "@vueuse/nuxt": "^10.2.0",
-    "nuxt": "^3.5.3",
-    "nuxt-lodash": "^2.4.1",
+    "@types/node": "^20.4.1",
+    "@vueuse/core": "^10.2.1",
+    "@vueuse/nuxt": "^10.2.1",
+    "nuxt": "^3.6.2",
+    "nuxt-lodash": "^2.5.0",
     "vue-gtag-next": "^1.14.0"
   },
   "dependencies": {
-    "@nuxtjs/tailwindcss": "^6.7.2",
+    "@nuxtjs/tailwindcss": "^6.8.0",
     "@pinia/nuxt": "^0.4.11",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
-    "@zip.js/zip.js": "^2.7.16",
+    "@zip.js/zip.js": "^2.7.20",
     "autoprefixer": "^10.4.14",
     "pinia": "^2.1.4",
-    "postcss": "^8.4.24",
-    "sass": "^1.63.4",
+    "postcss": "^8.4.25",
+    "sass": "^1.63.6",
     "scss": "^0.2.4",
     "tailwindcss": "^3.3.2"
   }
