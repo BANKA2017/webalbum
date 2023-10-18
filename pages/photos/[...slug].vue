@@ -15,12 +15,12 @@
         </ul>
         <hr class="my-5" v-if="gameHash.length > 0"/>
         <h3 class="text-xl font-bold mb-2">Download</h3>
-        <div class="w-full" v-if="state.tweet[0].media[0].origin_type === 'photo'">
+        <div class="w-full" v-if="state.tweet[0].media[0].original_type === 'photo'">
           <a class="block col-span-1 border-2 border-slate-300 hover:border-sky-500 w-full px-2 py-1 mb-1" :href="mediaPath + media.url + ':orig'" target="_blank" v-for="(media, index) in state.tweet[0].media" :key="media.filename">{{`${index + 1}. ${media.basename}`}}</a>
         </div>
         <div v-else class="w-full font-mono">
           <a class="block col-span-1 border-2 border-slate-300 hover:border-sky-500 w-full px-2 py-1 mb-3" :href="mediaPath + state.tweet[0].media[0].url" target="_blank">{{ state.tweet[0].media[0].basename }}</a>
-          <p :class="{'inline-block': true, 'rounded-full': true, 'text-white': true, 'text-sm': true, 'px-2': true, 'mr-2': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox'}">{{ `${state.tweet[0].media[0].origin_info_width}x${state.tweet[0].media[0].origin_info_height}` }}</p>
+          <p :class="{'inline-block': true, 'rounded-full': true, 'text-white': true, 'text-sm': true, 'px-2': true, 'mr-2': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox'}">{{ `${state.tweet[0].media[0].original_info_width}x${state.tweet[0].media[0].original_info_height}` }}</p>
           <p :class="{'inline-block': true, 'rounded-full': true, 'text-white': true, 'text-sm': true, 'px-2': true, 'mr-2': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox'}">{{ `${state.tweet[0].media[0].bitrate / 1000} kbps` }}</p>
         </div>
         <hr class="my-3" />

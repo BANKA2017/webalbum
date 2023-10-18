@@ -11,7 +11,7 @@
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
           </div>
-          <img v-if="media[state.activeIndex].origin_type === 'photo'" class="aspect-video w-full bg-slate-300 dark:bg-slate-700 object-scale-down" :src="mediaPath + media[state.activeIndex].cover + ':orig'" loading="lazy" :alt="media[state.activeIndex].filename" @load="state.loadingImage = false">
+          <img v-if="media[state.activeIndex].original_type === 'photo'" class="aspect-video w-full bg-slate-300 dark:bg-slate-700 object-scale-down" :src="mediaPath + media[state.activeIndex].cover + ':orig'" loading="lazy" :alt="media[state.activeIndex].filename" @load="state.loadingImage = false">
           <video v-else controls :poster="mediaPath + media[state.activeIndex].cover" :src="mediaPath + media[state.activeIndex].url" class="aspect-video w-full bg-slate-300 dark:bg-slate-700 object-scale-down" @loadedmetadata="state.loadingImage = false" />
         </div>
       </div>
