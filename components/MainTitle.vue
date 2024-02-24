@@ -2,7 +2,7 @@
   <div class="mt-4">
     <div class="flex items-center justify-between">
       <div class="text-4xl py-1 font-bold bg-clip-text">
-        <router-link to="/" class="inline-block mr-2 dark:text-white">Album</router-link>
+        <router-link to="/" class="inline-block mr-2 dark:text-white"><span class="line-through">Album</span></router-link>
         <span :class="{'select-none': true, 'text-white': true, 'px-2': true, 'rounded-2xl': true, 'text-sm': true, 'bg-[#E60012]': platform === 'ns', 'bg-[#0070D1]': platform === 'ps', 'bg-[#107C10]': platform === 'xbox'}">{{ platform }}</span>
       </div>
 

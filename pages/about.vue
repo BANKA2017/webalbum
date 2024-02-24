@@ -27,11 +27,6 @@
             <div class="p-5 rounded-xl bg-gray-100 dark:bg-gray-800 font-mono col-span-2 lg:col-span-1">{{queryContent}}</div>
         </div>
 
-        <h3 class="text-2xl font-bold my-5">Donating</h3>
-        <ul>
-            <li class="text-lg"><span class="font-bold">Patreon</span>: <NuxtLink href="https://www.patreon.com/banka2017" target="_blank" class="underline underline-offset-2">https://patreon.com/banka2017</NuxtLink></li>
-        </ul>
-
         <div class=" flex flex-col items-end mt-5 mb-14 text-sm">
             <p>Translated by OpenAI GPT-3.5, written by <NuxtLink href="https://nest.moe" class="font-bold hover:underline underline-offset-2">MANKA</NuxtLink> with ❤️</p>
         </div>

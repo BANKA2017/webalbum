@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import {useMainStore} from "~/stores/main";
-import {ApiUserInfo} from "~/type/Api";
+import type {ApiUserInfo} from "~/type/Api";
 import {switchDarkMode, switchDarkModeAction} from "~/share/DarkMode";
 
 useHead({

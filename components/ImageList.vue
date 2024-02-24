@@ -34,7 +34,7 @@
 <script setup lang="ts">
 
 import {computed, PropType, reactive, watch} from "vue";
-import {Media} from "@/type/Content";
+import type {Media} from "@/type/Content";
 import {useRoute, useRouter} from "vue-router";
 
 const props = defineProps({

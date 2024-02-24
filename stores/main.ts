@@ -1,6 +1,6 @@
 
 //TODO typescript interface
-import {State} from "~/type/State";
+import type {State} from "~/type/State";
 
 export const useMainStore = defineStore('main', {
   state: (): State => ({

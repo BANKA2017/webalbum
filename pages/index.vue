@@ -1,6 +1,19 @@
 <template>
   <div class="my-5">
-    <div v-if="state.loading" class="animate-pulse space-y-4">
+    <div class="dark:text-white border-2 p-5 rounded-2xl ">
+      <h3 class="text-2xl text-center">GoodBye~</h3>
+      <p class="text-lg my-4">Due to Twitter's cessation of anonymous access to the search API, this site will be suspended until a new universal solution is found.</p>
+      <p class="text-lg">In addition, both PlayStation and Xbox no longer support direct uploading of game screenshots/videos to Twitter via the gaming consoles.</p>
+      <hr class="my-4" />
+      <a href="https://www.playstation.com/en-us/support/important-notice/" target="_blank" class="text-2xl"><span class="text-[#0070D1]">PlayStation</span> > Termination of X (formerly known as Twitter) integration</a>
+      <p>As of November 13, 2023, integration with X (formerly known as Twitter) will no longer function on PlayStation 5 and PlayStation 4 consoles. This includes the ability to view any content published on X on PS5/PS4, and the ability to post and view content, trophies, and other gameplay-related activities on X directly from PS5/PS4 (or link an X account to do so). For details on how to share game captures from PS5, click <a href="https://www.playstation.com/en-us/support/games/ps5-game-captures-ps-app/" target="_blank" class="underline">here</a>, and for PS4, click <a href="https://www.playstation.com/en-us/support/games/ps4-edit-share-screenshots-clips/" target="_blank" class="underline">here</a>.</p>
+      <hr class="my-4" />
+      <a href="https://twitter.com/Xbox/status/1649154451045793793" target="_blank" class="text-2xl"><span class="text-[#107C10]">Xbox</span> > Twitter Reply</a>
+      <p>We have had to disable the ability to share game uploads to Twitter directly from the console and Game Bar on Windows. You can still share your favorite moments to Twitter via the Xbox app for Android and iOS.</p>
+      <hr class="my-4" />
+      <p >You can still access the content of individual tweets by visiting <span class="font-mono">/photos/:tweet_id</span> (likes <NuxtLink to="/photos/1761103726310277143" class="underline">/photos/1761103726310277143</NuxtLink>) until we completely shut down the backend service of gamealbum.</p>
+    </div>
+    <div v-if="false" class="animate-pulse space-y-4">
       <div class="text-4xl font-sans my-4 w-[12vw] bg-slate-300 dark:bg-slate-700 h-10"></div>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         <div class="bg-slate-300 dark:bg-slate-700 aspect-video border-2 border-white dark:border-black select-none" v-for="i in new Array(5)" :key="i"></div>
@@ -83,9 +96,9 @@
 <script setup lang="ts">
 
 import {useMainStore} from "~/stores/main";
-import {Media} from "~/type/Content";
+import type {Media} from "~/type/Content";
 import {Controller, controller, request} from "~/share/Fetch";
-import {ApiTweets} from "~/type/Api";
+import type {ApiTweets} from "~/type/Api";
 import {Download} from "~/share/Tools"
 import {BlobReader, BlobWriter, ZipWriter} from "@zip.js/zip.js";
 
@@ -118,6 +131,8 @@ const hashtagsCount = computed(() => store.hashtags_count)
 const route = useRoute()
 const cancelToken = controller
 const load = (tweet_id: string | number | bigint = -1, game: string = '') => {
+  //TODO bye~
+  return
   state.loadmore = true
 
   let queryObject: {[p: string]: string} = {

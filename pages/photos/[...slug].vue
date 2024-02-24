@@ -58,8 +58,8 @@
 <script setup lang="ts">
 
 import {useMainStore} from "~/stores/main";
-import {Tweet} from "~/type/Content";
-import {ApiTweets} from "~/type/Api";
+import type {Tweet} from "~/type/Content";
+import type {ApiTweets} from "~/type/Api";
 import {request} from "~/share/Fetch";
 import {onMounted} from "vue";
 import {useRoute} from "vue-router";

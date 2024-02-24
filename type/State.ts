@@ -1,4 +1,4 @@
-import {Tweet} from "@/type/Content";
+import type {Tweet} from "@/type/Content";
 import {darkModeType} from "~/share/DarkMode";
 
 //TODO fix type

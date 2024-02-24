@@ -1,4 +1,4 @@
-import {
+import type {
   Tweet,
   UserInfo,
 } from "@/type/Content";
