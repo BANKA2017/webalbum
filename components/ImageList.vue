@@ -11,20 +11,20 @@
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
           </div>
-          <img v-if="media[state.activeIndex].original_type === 'photo'" class="aspect-video w-full bg-slate-300 dark:bg-slate-700 object-scale-down" :src="mediaPath + media[state.activeIndex].cover + ':orig'" loading="lazy" :alt="media[state.activeIndex].filename" @load="state.loadingImage = false">
-          <video v-else controls :poster="mediaPath + media[state.activeIndex].cover" :src="mediaPath + media[state.activeIndex].url" class="aspect-video w-full bg-slate-300 dark:bg-slate-700 object-scale-down" @loadedmetadata="state.loadingImage = false" />
+          <img v-if="_media[state.activeIndex].original_type === 'photo'" class="aspect-video w-full bg-slate-300 dark:bg-slate-700 object-scale-down" :src="mediaPath + _media[state.activeIndex].cover.replace('https://', '') + ':orig'" loading="lazy" :alt="_media[state.activeIndex].filename" @load="state.loadingImage = false">
+          <video v-else controls :poster="mediaPath + _media[state.activeIndex].cover.replace('https://', '')" :src="mediaPath + _media[state.activeIndex].url.replace('https://', '')" class="aspect-video w-full bg-slate-300 dark:bg-slate-700 object-scale-down" @loadedmetadata="state.loadingImage = false" />
         </div>
       </div>
       <!--小图预览-->
       <div class="flex justify-between">
         <div >
-          <div @click="updateIndex(index)" :class="{'bg-slate-300': true, 'dark:bg-slate-700': true, 'cursor-pointer': true, 'inline-block': true, 'mr-5': true, 'aspect-square': true, 'h-24': true, 'border-4': true, 'border-transparent': state.activeIndex !== index, 'border-cyan-500': state.activeIndex === index, 'hover:border-cyan-500': true}" v-for="(mediaItem, index) in media" :key="mediaItem.filename">
-            <img class="" :src="mediaPath + mediaItem.cover + ':thumb'" loading="lazy" :alt="mediaItem.filename">
+          <div @click="updateIndex(index)" :class="{'bg-slate-300': true, 'dark:bg-slate-700': true, 'cursor-pointer': true, 'inline-block': true, 'mr-5': true, 'aspect-square': true, 'h-24': true, 'border-4': true, 'border-transparent': state.activeIndex !== index, 'border-cyan-500': state.activeIndex === index, 'hover:border-cyan-500': true}" v-for="(mediaItem, index) in _media" :key="mediaItem.filename">
+            <img class="" :src="mediaPath + mediaItem.cover.replace('https://', '') + ':thumb'" loading="lazy" :alt="mediaItem.filename">
           </div>
         </div>
 
         <div class="font-sans md:text-3xl lg:text-[4rem] mt-5 hidden lg:block dark:text-gray-200">
-          <p>{{(state.activeIndex + 1) + ' / ' + media.length}}</p>
+          <p>{{(state.activeIndex + 1) + ' / ' + _media.length}}</p>
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 
-import {computed, PropType, reactive, watch} from "vue";
+import {computed, reactive, watch} from "vue";
 import type {Media} from "@/type/Content";
 import {useRoute, useRouter} from "vue-router";
 
@@ -84,6 +84,9 @@ const updateIndex = (index: number = 0) => {
   state.activeIndex = index
   router.replace(String(index + 1))
 }
+
+const _media = computed(() => props.media.filter(x => x.source !== 'cover'))
+
 </script>
 
 <style scoped>
